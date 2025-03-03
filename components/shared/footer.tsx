@@ -14,14 +14,14 @@ const Footer = () => {
               <div className="mb-8 max-w-[360px] mx-auto lg:mb-16">
                 <Link href="/" className="mb-6 inline-block">
                   <Image
-                    src="/assets/icons/logo.png"
+                    src="/assets/icons/logo.jpg"
                     alt="logo"
                     className="w-full dark:hidden"
                     width={100}
                     height={50}
                   />
                   <Image
-                    src="/assets/icons/logo.png"
+                    src="/assets/icons/logo.jpg"
                     alt="Dark mode logo"
                     className="hidden w-full dark:block"
                     width={120}
@@ -59,44 +59,6 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://truthsocial.com" // Link to Truth Social
-                    aria-label="truth-social-link"
-                    className="mr-6 text-body-color duration-300 hover:text-gray-500 dark:text-body-color-dark"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      className="fill-current"
-                    >
-                      <rect
-                        width="11"
-                        height="10"
-                        x="3"
-                        y="6"
-                        fill="#661dff"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                      ></rect>
-                      <rect
-                        width="11"
-                        height="10"
-                        x="34"
-                        y="33"
-                        fill="#17e8b5"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                      ></rect>
-                      <polygon
-                        fill="#661dff"
-                        fillRule="evenodd"
-                        points="18,6 18,43 29,43 29,16 45,16 45,6"
-                        clipRule="evenodd"
-                      ></polygon>
-                    </svg>
-                  </a>
-
-                  <a
                     href="/" // Link to the youtube.com
                     aria-label="social-link"
                     className="mr-6 text-body-color duration-300 hover:text-gray-500 dark:text-body-color-dark"
@@ -108,20 +70,6 @@ const Footer = () => {
                       className="fill-current"
                     >
                       <path d="M17.5058 2.07119C17.3068 1.2488 16.7099 0.609173 15.9423 0.395963C14.5778 7.26191e-08 9.0627 0 9.0627 0C9.0627 0 3.54766 7.26191e-08 2.18311 0.395963C1.41555 0.609173 0.818561 1.2488 0.619565 2.07119C0.25 3.56366 0.25 6.60953 0.25 6.60953C0.25 6.60953 0.25 9.68585 0.619565 11.1479C0.818561 11.9703 1.41555 12.6099 2.18311 12.8231C3.54766 13.2191 9.0627 13.2191 9.0627 13.2191C9.0627 13.2191 14.5778 13.2191 15.9423 12.8231C16.7099 12.6099 17.3068 11.9703 17.5058 11.1479C17.8754 9.68585 17.8754 6.60953 17.8754 6.60953C17.8754 6.60953 17.8754 3.56366 17.5058 2.07119ZM7.30016 9.44218V3.77687L11.8771 6.60953L7.30016 9.44218Z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="/" // Link to the linkedin.com
-                    aria-label="social-link"
-                    className="text-body-color duration-300 hover:text-gray-500 dark:text-body-color-dark"
-                  >
-                    <svg
-                      width="17"
-                      height="16"
-                      viewBox="0 0 17 16"
-                      className="fill-current"
-                    >
-                      <path d="M15.2196 0H1.99991C1.37516 0 0.875366 0.497491 0.875366 1.11936V14.3029C0.875366 14.8999 1.37516 15.4222 1.99991 15.4222H15.1696C15.7943 15.4222 16.2941 14.9247 16.2941 14.3029V1.09448C16.3441 0.497491 15.8443 0 15.2196 0ZM5.44852 13.1089H3.17444V5.7709H5.44852V13.1089ZM4.29899 4.75104C3.54929 4.75104 2.97452 4.15405 2.97452 3.43269C2.97452 2.71133 3.57428 2.11434 4.29899 2.11434C5.02369 2.11434 5.62345 2.71133 5.62345 3.43269C5.62345 4.15405 5.07367 4.75104 4.29899 4.75104ZM14.07 13.1089H11.796V9.55183C11.796 8.7061 11.771 7.58674 10.5964 7.58674C9.39693 7.58674 9.222 8.53198 9.222 9.47721V13.1089H6.94792V5.7709H9.17202V6.79076H9.19701C9.52188 6.19377 10.2466 5.59678 11.3711 5.59678C13.6952 5.59678 14.12 7.08925 14.12 9.12897V13.1089H14.07Z" />
                     </svg>
                   </a>
                 </div>
@@ -146,14 +94,6 @@ const Footer = () => {
                       className="block text-gray-300 hover:text-gray-500"
                     >
                       FAQs
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/personal-journey-of-faith/"
-                      className="block text-gray-300 hover:text-gray-500"
-                    >
-                      Personal Journey of Faith
                     </a>
                   </li>
                 </ul>

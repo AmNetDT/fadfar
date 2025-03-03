@@ -12,7 +12,8 @@ loadEnvConfig(cwd())
 const main = async () => {
   try {
     const client = new Client({
-      connectionString: process.env.POSTGRES_URL,
+      //connectionString: process.env.POSTGRES_URL,
+      connectionString: process.env.DATABASE_URL,
     })
     await client.connect()
     const db = drizzle(client)

@@ -21,13 +21,13 @@ const Header = async () => {
   const categories = await getAllCategories()
 
   return (
-    <header className="w-full border-b" style={{ backgroundColor: '#1d132d' }}>
+    <header className="w-full border-b" style={{ backgroundColor: '#406126' }}>
       <div className="wrapper flex-between">
         {/* Logo section - always visible */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center mr-4">
             <Image
-              src="/assets/icons/logo.png"
+              src="/assets/icons/logo.jpg"
               width={70}
               height={70}
               alt={`${APP_NAME} logo`}
@@ -57,7 +57,7 @@ const Header = async () => {
                     variant="outline"
                     style={{
                       padding: '10px',
-                      backgroundColor: '#1d132d',
+                      backgroundColor: '#406126',
                       color: '#ffffff',
                       border: 'solid 1px #ffffff',
                     }}
@@ -104,7 +104,7 @@ const Header = async () => {
                   variant="outline"
                   style={{
                     padding: '10px',
-                    backgroundColor: '#1d132d',
+                    backgroundColor: '#406126',
                     color: '#ffffff',
                     border: 'solid 1px #ffffff',
                     marginLeft: '10px',
@@ -131,7 +131,7 @@ const Header = async () => {
                   variant="outline"
                   style={{
                     padding: '23px',
-                    backgroundColor: '#1d132d',
+                    backgroundColor: '#406126',
                     color: '#ffffff',
                     border: 'solid 1px #ffffff',
                   }}
