@@ -1,16 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import Image from 'next/image'
+//import { useState } from 'react'
 import Link from 'next/link'
 import ProductPrice from './product-price'
 import Rating from './rating'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Product } from '@/types'
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-
   // Limit product name to 70 characters
   const truncatedName =
     product.name.length > 70 ? product.name.slice(0, 70) + '...' : product.name
@@ -18,27 +14,31 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link href={`/product/${product.slug}`}>
       <div
-        style={{ height: '250px' }}
-        className="bg-white rounded-lg shadow-md overflow-hidden 
-      hover:shadow-lg transition-shadow duration-300 p-4"
+        style={{ height: '330px' }}
+        className="flex flex-wrap gap-4 bg-white rounded-lg shadow-md overflow-hidden 
+      hover:shadow-lg transition-shadow duration-300 p-0"
       >
         <img
           src={product.images![0]}
           alt={product.name}
           className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
         />
-        <div className="p-4">
+        <div className="p-2">
           <p className="text-1xl font-semibold hover:text-gray-500 transition-colors duration-300">
             {product.name}
           </p>
-          <div className="flex justify-between items-center">
+          <div className="w-1/3 p-1">
             <Rating value={Number(product.rating)} />
-            {product.stock > 0 ? (
-              <ProductPrice value={Number(product.price)} />
-            ) : (
-              <p className="text-red-500">Out of Stock</p>
-            )}
           </div>
+          {product.stock > 0 ? (
+            <div className="w-1/3 p-1">
+              <ProductPrice value={Number(product.price)} />
+            </div>
+          ) : (
+            <div className="w-1/3 p-1">
+              <p className="text-red-500">Out of Stock</p>
+            </div>
+          )}
         </div>
       </div>
     </Link>

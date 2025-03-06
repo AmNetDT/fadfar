@@ -19,7 +19,6 @@ export default async function Home() {
         <div className="space-y-8">
           <ProductList title="" data={latestProducts} />
           <ProductPromotion />
-          <EcommerceFeatures />
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ export default function ProductCarousel({ data }: { data: Product[] }) {
       }}
       plugins={[
         Autoplay({
-          delay: 1000,
+          delay: 8000,
           stopOnInteraction: true,
           stopOnMouseEnter: true,
         }),
@@ -36,7 +36,7 @@ export default function ProductCarousel({ data }: { data: Product[] }) {
                   width="0"
                   height="0"
                   sizes="100vw"
-                  className="w-full object-cover h-150"
+                  className="w-full object-cover"
                 />
               </div>
             </Link>

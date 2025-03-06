@@ -21,7 +21,7 @@ export default function ProductImages({ images }: { images: string[] }) {
           <div
             key={image}
             className={cn(
-              'border   mr-2 cursor-pointer hover:border-dark-600',
+              'border mr-2 cursor-pointer hover:border-dark-600',
               current === index && '  border-dark-500'
             )}
             onClick={() => setCurrent(index)}

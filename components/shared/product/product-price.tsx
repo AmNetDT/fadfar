@@ -12,8 +12,8 @@ const ProductPrice = ({
     ? stringValue.split('.')
     : [stringValue, '']
   return (
-    <p className={cn('text-2xl', className)}>
-      <span className="text-xs align-super">US$</span>
+    <p className={cn('text-1xl', className)}>
+      <span className="text-xs align-super">NGN</span>
       {intValue}
       <span className="text-xs align-super">{floatValue}</span>
     </p>

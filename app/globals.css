@@ -118,17 +118,17 @@ footer {
   text-align: left;
   padding: 30px;
   margin-top: 60px;
-  color: #ffffff;
-  border-top: 1px solid #eaeaea;
-  background-color: #406126;
+  color: #131313;
+  border-top: 1px solid #282727;
+  background-color: #faf8f8;
 }
 .footer-link {
   font-size: 10px; /* Small and readable text */
-  color: #ffffff; /* Lighter text color */
+  color: #282727; /* Lighter text color */
   transition: color 0.3s ease; /* Smooth hover effect */
 }
 
 .footer-link:hover {
-  color: #8e9193; /* Change color on hover */
+  color: #000204; /* Change color on hover */
   text-decoration: underline; /* Add underline for visual feedback */
 }

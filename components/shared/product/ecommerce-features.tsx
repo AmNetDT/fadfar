@@ -3,9 +3,9 @@ import { DollarSign, Headset, ShoppingBag, WalletCards } from 'lucide-react'
 
 const EcommerceFeatures = () => {
   return (
-    <div className="">
+    <div>
       <Card>
-        <CardContent className="grid gap-4 md:grid-cols-4 p-4 ">
+        <CardContent className="grid gap-4 md:grid-cols-4 p-4">
           <div className="space-y-2">
             <ShoppingBag />
             <div className="text-[17px] sm:text-[17px] md:text-[17px] lg:text-[17px] leading-[1.5] font-bold">

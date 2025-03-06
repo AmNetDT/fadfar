@@ -15,13 +15,6 @@ import {
 import { Button } from '../ui/button'
 import { useToast } from '@/hooks/use-toast'
 
-// // eslint-disable-next-line no-unused-vars
-// type DeleteDialogProps = {
-//   id: string
-//   action: (id: string) => Promise<{ success: boolean; message: string }>
-// }
-
-// eslint-disable-next-line no-unused-vars
 export default function DeleteDialog({
   id,
   action,
