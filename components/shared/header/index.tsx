@@ -42,7 +42,7 @@ const Header = async () => {
           <div className="flex w-full justify-between items-center mb-4">
             <Link href="/" className="flex items-center">
               <Image
-                src="/assets/icons/logo.png"
+                src="/assets/icons/logo.jpg"
                 width={70}
                 height={70}
                 alt={`${APP_NAME} logo`}

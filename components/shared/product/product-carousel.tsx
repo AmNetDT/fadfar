@@ -13,7 +13,7 @@ import Link from 'next/link'
 export default function ProductCarousel({ data }: { data: Product[] }) {
   return (
     <Carousel
-      className="w-full mb-0"
+      className="w-full mb-2"
       opts={{
         loop: true,
       }}
