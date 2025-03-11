@@ -21,7 +21,10 @@ const Header = async () => {
   const categories = await getAllCategories()
 
   return (
-    <header className="w-full border-b" style={{ backgroundColor: '#406126' }}>
+    <header
+      className="w-full border-b-amber-600 border-b-2"
+      // style={{ backgroundColor: '#f9ffde' /*'#406126'*/ }}
+    >
       <div className="wrapper flex-between">
         {/* Logo section - always visible */}
         <div className="flex items-center">

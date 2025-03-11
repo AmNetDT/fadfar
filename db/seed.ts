@@ -21,6 +21,7 @@ const main = async () => {
     await db.delete(schema.accounts)
     await db.delete(schema.users)
     await db.delete(schema.products)
+    await db.delete(schema.promo)
 
     const resUsers = await db
       .insert(schema.users)

@@ -13,13 +13,13 @@ import Link from 'next/link'
 export default function ProductCarousel({ data }: { data: Product[] }) {
   return (
     <Carousel
-      className="w-full mb-2"
+      className="w-full mb-2 -mt-5"
       opts={{
         loop: true,
       }}
       plugins={[
         Autoplay({
-          delay: 8000,
+          delay: 3000,
           stopOnInteraction: true,
           stopOnMouseEnter: true,
         }),

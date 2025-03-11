@@ -10,6 +10,7 @@ import {
   timestamp,
   uniqueIndex,
   uuid,
+  varchar,
 } from 'drizzle-orm/pg-core'
 import { primaryKey } from 'drizzle-orm/pg-core/primary-keys'
 import { AdapterAccountType } from 'next-auth/adapters'
@@ -100,6 +101,7 @@ export const products = pgTable(
     isFeatured: boolean('isFeatured').default(false).notNull(),
     banner: text('banner'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
+    promo_id: integer('numReviews').notNull().default(0),
   },
   (table) => {
     return {
@@ -107,6 +109,16 @@ export const products = pgTable(
     }
   }
 )
+
+// PROMO
+export const promo = pgTable('promo', {
+  id: uuid('id').notNull().defaultRandom().primaryKey(),
+  name: varchar('name').notNull(),
+  startdate: varchar('startdate').notNull(),
+  enddate: varchar('enddate').notNull(),
+})
+
+//REVIEWS
 export const reviews = pgTable('reviews', {
   id: uuid('id').defaultRandom().primaryKey().notNull(),
   userId: uuid('userId')
