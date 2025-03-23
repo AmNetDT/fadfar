@@ -7,16 +7,16 @@ import Link from 'next/link'
 const sortOrders = ['newest', 'lowest', 'highest', 'rating']
 const prices = [
   {
-    name: '$1 to $100',
-    value: '1-100',
+    name: 'NGN100 to NGN10000',
+    value: '100-10000',
   },
   {
-    name: '$101 to $200',
-    value: '101-200',
+    name: 'NGN10001 to NGN20000',
+    value: '10001-20000',
   },
   {
-    name: '$201 to $1000',
-    value: '201-1000',
+    name: 'NGN20001 to NGN100000',
+    value: '20001-100000',
   },
 ]
 const ratings = [4, 3, 2, 1]
@@ -90,7 +90,7 @@ export default async function SearchPage({
     if (r) params.rating = r
     if (pg) params.page = pg
     if (s) params.sort = s
-    return `/search?${new URLSearchParams(params).toString()}`
+    return `/search?NGN{new URLSearchParams(params).toString()}`
   }
   const categories = await getAllCategories()
   const products = await getAllProducts({
@@ -104,12 +104,12 @@ export default async function SearchPage({
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
       <div>
-        <div className="text-xl pt-3">Department</div>
+        <div className="text-xl pt-3">Category</div>
         <div>
           <ul>
             <li>
               <Link
-                className={`${
+                className={`NGN{
                   ('all' === category || '' === category) && 'text-primary'
                 }`}
                 href={getFilterUrl({ c: 'all' })}
@@ -201,7 +201,7 @@ export default async function SearchPage({
             {sortOrders.map((s) => (
               <Link
                 key={s}
-                className={`mx-2   ${sort == s && 'text-primary'} `}
+                className={`mx-2   NGN{sort == s && 'text-primary'} `}
                 href={getFilterUrl({ s })}
               >
                 {s}

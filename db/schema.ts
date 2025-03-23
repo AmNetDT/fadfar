@@ -101,7 +101,7 @@ export const products = pgTable(
     isFeatured: boolean('isFeatured').default(false).notNull(),
     banner: text('banner'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
-    promo_id: integer('numReviews').notNull().default(0),
+    promo_id: integer('promo_id').notNull().default(0),
   },
   (table) => {
     return {

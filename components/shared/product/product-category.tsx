@@ -11,8 +11,7 @@ const ProductCategory = ({ product }: { product: Product }) => {
     <Link href={`/product/${product.slug}`}>
       <div
         style={{ height: '250px' }}
-        className="flex flex-wrap rounded-lg shadow-md overflow-hidden
-      hover:shadow-lg transition-shadow duration-300 p-0"
+        className="flex flex-wrap rounded-lg p-3 border-2 border-slate-300"
       >
         <img
           src={product.images![0]}
@@ -21,8 +20,8 @@ const ProductCategory = ({ product }: { product: Product }) => {
         />
         <div className="m-0 mx-auto">
           <p
-            className="text-1xl truncate text-slate-900 p-4 rounded-full
-           hover:text-gray-500 transition-colors duration-300"
+            className="text-1xl truncate text-slate-200 p-2 rounded-full
+           hover:text-gray-500 transition-colors duration-300 font-extrabold"
           >
             {product.brand}
           </p>

@@ -6,11 +6,8 @@ import Link from 'next/link'
 const Footer = () => {
   return (
     <>
-      <footer className="wow fadeInUp relative z-10 dark:bg-gray-dark p-0 border-t-8">
-        <div
-          className="container-fluid mx-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 
-          to-transparentmb-10 p-0 mb-10"
-        >
+      <footer className="wow fadeInUp relative z-10 dark:bg-gray-dark p-0">
+        <div className="container-fluid mx-0 mb-10 p-0">
           <div
             className="container mx-auto first-letter:text-sm text-body-colordark:text-body-color-dark 
           pt-4 sm:pt-4 md:pt-4 lg:pt-4 xl:pt-4 pb-0"

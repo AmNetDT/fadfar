@@ -51,7 +51,7 @@ const ProductPromotion = () => {
   }, [targetDate])
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-300 mt-20 px-20 border-t-2">
       <div className="flex flex-col gap-4 justify-center">
         <h3 className="text-2xl font-bold">
           McVitie’s All Butter Shortbread, 200g
@@ -69,12 +69,12 @@ const ProductPromotion = () => {
           <StatBox label="Seconds" value={time.seconds} />
         </ul>
         <div className="mt-4 text-center">
-          <Button asChild>
-            <Link href="/search">View products</Link>
+          <Button asChild className="bg-slate-500">
+            <Link href="/search">View Products</Link>
           </Button>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center p-10">
         <Image
           alt="McVitie’s All Butter Shortbread, 200g"
           width={700}

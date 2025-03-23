@@ -1,6 +1,7 @@
 import { Product } from '@/types'
 import ProductCard from './product-card'
 import ProductCategory from './product-category'
+import Link from 'next/link'
 
 const ProductList = async ({ data }: { data: Product[] }) => {
   // Group products by category and get the last updated one
@@ -23,13 +24,13 @@ const ProductList = async ({ data }: { data: Product[] }) => {
     <>
       {data.length > 0 ? (
         <div>
-          <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-7 -mt-2 bg-yellow-100 p-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
             {/* I used truncate to restrict the paragraph sentence from spreading to another line */}
             {data
-              .filter((product: Product) => (product.promo_id = 2))
+              .filter((product: Product) => product.promo_id === 2)
               .slice(0, 6) // limit to 6 items
               .map((product: Product) => (
-                <ProductCard key={product.slug} product={product} />
+                <ProductCategory key={product.slug} product={product} />
               ))}
           </div>
         </div>
@@ -38,27 +39,20 @@ const ProductList = async ({ data }: { data: Product[] }) => {
           <p>No product found</p>
         </div>
       )}
-
-      {latestProducts.length > 0 ? (
-        <div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-5 p-1">
-            {latestProducts.map((product) => (
-              <ProductCategory key={product.slug} product={product} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
-        </div>
-      )}
-
       {data.length > 0 ? (
         <div>
-          <div className="text-left bg-orange-500  text-slate-100 p-4 rounded-t-lg">
-            BABY CARES - FOODS
+          <div className="flex text-left bg-orange-500 text-slate-100 p-4 rounded-t-lg">
+            <div className="w-4/5">BABY CARES - FOODS</div>
+            <div className="w-1/5 text-right">
+              <Link
+                className="rounded border-2 p-2 border-slate-100 text-slate-100"
+                href="/search"
+              >
+                View All
+              </Link>
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-5 bg-slate-100 border-t-2 border-yellow-300 p-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-5 bg-slate-100 border-t-2 border-yellow-300">
             {/* I used truncate to restrict the paragraph sentence from spreading to another line */}
             {data
               .filter(
@@ -78,8 +72,16 @@ const ProductList = async ({ data }: { data: Product[] }) => {
 
       {data.length > 0 ? (
         <div>
-          <div className="text-left bg-lime-300  text-slate-700 p-4 rounded-t-lg">
-            BISCUITS AND CONFECTIONAL
+          <div className="flex text-left bg-lime-600 text-slate-100 p-4 rounded-t-lg">
+            <div className="w-4/5">BISCUITS AND CONFECTIONAL</div>
+            <div className="w-1/5 text-right">
+              <Link
+                className="rounded border-2 p-2 border-slate-100 text-slate-100"
+                href="/search"
+              >
+                View All
+              </Link>
+            </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 p-1">
             {data
@@ -99,13 +101,16 @@ const ProductList = async ({ data }: { data: Product[] }) => {
         </div>
       )}
 
-      {data.length > 0 ? (
+      {latestProducts.length > 0 ? (
         <div>
-          <div className="text-left text-3xl text-slate-700 p-4 text-nowrap">
-            Trending Products
+          <div className="flex text-left text-2xl text-slate-700 px-4 pb-2 mt-20 border-b-8 border-slate-500 text-nowrap">
+            <div className="w-4/5">Trending Products</div>
+            <div className="w-1/5 text-right">
+              <Link href="/search">View All</Link>
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 p-1">
-            {data.map((product: Product) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            {latestProducts.map((product) => (
               <div key={product.slug}>
                 <ProductCard product={product} />
               </div>

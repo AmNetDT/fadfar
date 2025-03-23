@@ -3,7 +3,7 @@ import db from '@/db/drizzle'
 import { products } from '@/db/schema'
 import { and, count, eq, ilike, sql } from 'drizzle-orm/sql'
 import { PAGE_SIZE } from '../constants'
-import { z } from 'zod'
+import { string, z } from 'zod'
 import { insertProductSchema, updateProductSchema } from '../validator'
 import { revalidatePath } from 'next/cache'
 import { formatError } from '../utils'
@@ -77,9 +77,18 @@ export async function getAllCategories() {
     .orderBy(products.category)
   return data
 }
+
 export async function getFeaturedProducts() {
   const data = await db.query.products.findMany({
     where: eq(products.isFeatured, true),
+    orderBy: [desc(products.createdAt)],
+    //limit: 4,
+  })
+  return data
+}
+export async function getAllPromo() {
+  const data = await db.query.products.findMany({
+    where: eq(products.promo_id, 2),
     orderBy: [desc(products.createdAt)],
     //limit: 4,
   })
