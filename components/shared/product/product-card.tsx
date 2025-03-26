@@ -21,15 +21,15 @@ const ProductCard = ({ product }: { product: Product }) => {
           alt={product.name}
           className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
         />
-        <div className="m-4">
-          <p className="text-1xl truncate font-semibold text-slate-600 hover:text-gray-500 transition-colors duration-300">
+        <div className="w-full p-4 bg-white">
+          <p className="text-1xl truncate text-slate-600 capitalize hover:text-gray-500 transition-colors duration-300">
             {product.name}...
           </p>
           <div className="w-1/3 p-1">
             <Rating value={Number(product.rating)} />
           </div>
           {product.stock > 0 ? (
-            <div className="w-1/3 p-1 font-bold">
+            <div className="w-1/3 p-1">
               <ProductPrice value={Number(product.price)} />
             </div>
           ) : (

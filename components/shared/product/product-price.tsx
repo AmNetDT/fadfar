@@ -15,9 +15,9 @@ const ProductPrice = ({
   const formattedIntValue = Number(intValue).toLocaleString() // Add commas
 
   return (
-    <p className={cn('text-xl font-extrabold', className)}>
-      <span className="text-xs">NGN</span>
-      {formattedIntValue}
+    <p className={cn('text-xl text-nowrap', className)}>
+      {/* Naira Sign in HTML */}
+      &#8358; {formattedIntValue}
       {floatValue ? `.${floatValue}` : ''}
     </p>
   )
