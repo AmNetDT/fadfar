@@ -719,6 +719,10 @@ video {
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
+.my-20 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -734,10 +738,6 @@ video {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-.my-20 {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
 }
 .-mb-5 {
   margin-bottom: -1.25rem;
@@ -829,6 +829,9 @@ video {
 .mt-4 {
   margin-top: 1rem;
 }
+.mt-40 {
+  margin-top: 10rem;
+}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -840,9 +843,6 @@ video {
 }
 .mt-auto {
   margin-top: auto;
-}
-.mt-40 {
-  margin-top: 10rem;
 }
 .block {
   display: block;
@@ -3181,16 +3181,16 @@ video {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
   .lg\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .lg\:space-x-6 > :not([hidden]) ~ :not([hidden]) {
