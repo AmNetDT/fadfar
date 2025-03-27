@@ -8,20 +8,21 @@ export default function GoogleSignInForm() {
   const SignInButton = () => {
     const { pending } = useFormStatus()
     return (
-      <Button disabled={pending} className="w-full" variant="default">
-        <div className="flex items-center justify-center h-screen dark:bg-gray-800">
-          <button className="px-4 py-2 flex gap-2 text-white dark:text-slate-200 transition duration-150">
-            <Img
-              className="w-6 h-6"
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              loading="lazy"
-              alt="google logo"
-            />
-            <span>
-              {pending ? 'Redirecting to Google...' : 'Sign In with Google'}
-            </span>
-          </button>
-        </div>
+      <Button
+        disabled={pending}
+        className="link border-2 border-orange-500 p-4 transition duration-150 rounded-none mb-10"
+        variant="default"
+        style={{ width: '100%', height: '50%' }}
+      >
+        <Img
+          className="w-6 h-6"
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          loading="lazy"
+          alt="google logo"
+        />
+        <span>
+          {pending ? 'Redirecting to Google...' : 'Sign In with Google'}
+        </span>
       </Button>
     )
   }

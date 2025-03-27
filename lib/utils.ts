@@ -50,11 +50,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-const CURRENCY_FORMATTER = Intl.NumberFormat('en-US', {
-  currency: 'USD',
+const CURRENCY_FORMATTER = new Intl.NumberFormat('en-NG', {
   style: 'currency',
+  currency: 'NGN',
   minimumFractionDigits: 2,
 })
+
+//console.log(CURRENCY_FORMATTER.format(1000)) // Output: ₦1,000.00
 
 export function formatCurrency(amount: number | string | null) {
   if (typeof amount === 'number') {

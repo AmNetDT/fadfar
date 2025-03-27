@@ -739,9 +739,9 @@ video {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.mx-3 {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
+.my-28 {
+  margin-top: 7rem;
+  margin-bottom: 7rem;
 }
 .-mb-5 {
   margin-bottom: -1.25rem;
@@ -784,9 +784,6 @@ video {
 }
 .ml-0 {
   margin-left: 0px;
-}
-.ml-1 {
-  margin-left: 0.25rem;
 }
 .ml-2 {
   margin-left: 0.5rem;
@@ -848,11 +845,14 @@ video {
 .mt-auto {
   margin-top: auto;
 }
-.mt-1 {
-  margin-top: 0.25rem;
+.mb-20 {
+  margin-bottom: 5rem;
 }
-.mt-0 {
-  margin-top: 0px;
+.mt-28 {
+  margin-top: 7rem;
+}
+.mb-0 {
+  margin-bottom: 0px;
 }
 .block {
   display: block;
@@ -1325,14 +1325,6 @@ video {
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
 }
-.rounded-l {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-.rounded-l-none {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
 .border {
   border-width: 1px;
 }
@@ -1443,13 +1435,9 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(63 63 70 / var(--tw-border-opacity, 1));
 }
-.border-black {
+.border-orange-500 {
   --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
-}
-.border-slate-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
+  border-color: rgb(249 115 22 / var(--tw-border-opacity, 1));
 }
 .border-b-amber-600 {
   --tw-border-opacity: 1;
@@ -1530,6 +1518,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1));
 }
+.bg-orange-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
+}
 .bg-orange-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(234 88 12 / var(--tw-bg-opacity, 1));
@@ -1561,14 +1553,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-.bg-orange-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
-}
-.bg-orange-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 237 213 / var(--tw-bg-opacity, 1));
 }
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -1638,9 +1622,6 @@ video {
 }
 .p-8 {
   padding: 2rem;
-}
-.p-7 {
-  padding: 1.75rem;
 }
 .px-0 {
   padding-left: 0px;
@@ -1854,6 +1835,9 @@ video {
 .font-bold {
   font-weight: 700;
 }
+.font-extralight {
+  font-weight: 200;
+}
 .font-medium {
   font-weight: 500;
 }
@@ -1862,9 +1846,6 @@ video {
 }
 .font-semibold {
   font-weight: 600;
-}
-.font-extralight {
-  font-weight: 200;
 }
 .capitalize {
   text-transform: capitalize;
@@ -2394,6 +2375,11 @@ video {
   background-color: hsl(var(--muted) / 0.5);
 }
 
+.hover\:bg-orange-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-primary\/80:hover {
   background-color: hsl(var(--primary) / 0.8);
 }
@@ -2413,11 +2399,6 @@ video {
 .hover\:bg-slate-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-orange-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 247 237 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-slate-50:hover {
@@ -2462,16 +2443,6 @@ video {
   color: rgb(75 85 99 / var(--tw-text-opacity, 1));
 }
 
-.hover\:text-yellow-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(234 179 8 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-orange-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(253 186 116 / var(--tw-text-opacity, 1));
-}
-
 .hover\:text-orange-400:hover {
   --tw-text-opacity: 1;
   color: rgb(251 146 60 / var(--tw-text-opacity, 1));
@@ -2480,6 +2451,16 @@ video {
 .hover\:text-orange-500:hover {
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-yellow-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(234 179 8 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-orange-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity, 1));
 }
 
 .hover\:underline:hover {

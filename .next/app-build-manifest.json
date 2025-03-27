@@ -1,14 +1,14 @@
 {
   "pages": {
-    "/(root)/page": [
+    "/cart/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(root)/page.js"
+      "static/chunks/app/cart/page.js"
     ],
-    "/(root)/layout": [
+    "/cart/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(root)/layout.js"
+      "static/chunks/app/cart/layout.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -26,35 +26,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/product/[slug]/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/product/[slug]/page.js"
+      "static/chunks/app/_not-found/page.js"
     ],
-    "/product/[slug]/layout": [
+    "/(root)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/product/[slug]/layout.js"
+      "static/chunks/app/(root)/page.js"
     ],
-    "/search/page": [
+    "/(root)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/search/page.js"
+      "static/chunks/app/(root)/layout.js"
     ],
-    "/search/layout": [
+    "/(auth)/sign-in/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/search/layout.js"
+      "static/chunks/app/(auth)/sign-in/page.js"
     ],
-    "/cart/page": [
+    "/(auth)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/cart/page.js"
+      "static/chunks/app/(auth)/layout.js"
     ],
-    "/cart/layout": [
+    "/(auth)/sign-up/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/cart/layout.js"
+      "static/chunks/app/(auth)/sign-up/page.js"
     ]
   }
 }
