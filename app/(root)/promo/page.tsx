@@ -7,12 +7,15 @@ const Promo = ({ data }: { data: Product[] }) => {
     <div>
       <div className="flex text-left text-white text-2xl pb-4 rounded-t-lg">
         <div className="w-5/6">
-          <span className="bg-red-600 p-3 text-wrap">All Promo Sales</span>
+          <span className="bg-red-600 p-3 text-wrap">Flash Sales</span>
         </div>
         <div className="w-1/5 text-right">
           <Link
             className="rounded border-2 p-2 border-slate-100 text-slate-100 text-sm"
-            href="/search"
+            href={{
+              pathname: '/search',
+              query: { promo_id: 2 },
+            }}
           >
             View All
           </Link>

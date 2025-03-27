@@ -102,6 +102,7 @@ export async function getAllProducts({
   category,
   price,
   rating,
+  promo_id,
   sort,
 }: {
   query: string
@@ -110,12 +111,15 @@ export async function getAllProducts({
   page: number
   price?: string
   rating?: string
+  promo_id?: number
   sort?: string
 }) {
   const queryFilter =
     query && query !== 'all' ? ilike(products.name, `%${query}%`) : undefined
   const categoryFilter =
     category && category !== 'all' ? eq(products.category, category) : undefined
+  const promoFilter =
+    typeof promo_id === 'number' ? eq(products.promo_id, promo_id) : undefined
   const ratingFilter =
     rating && rating !== 'all'
       ? sql`${products.rating} >= ${rating}`
@@ -134,14 +138,22 @@ export async function getAllProducts({
         : sort === 'rating'
           ? desc(products.rating)
           : desc(products.createdAt)
-  const condition = and(queryFilter, categoryFilter, ratingFilter, priceFilter)
+  const conditions = [
+    queryFilter,
+    categoryFilter,
+    ratingFilter,
+    priceFilter,
+    promoFilter,
+  ].filter(Boolean)
+  const condition = conditions.length > 0 ? and(...conditions) : undefined
+
   const data = await db
     .select()
     .from(products)
     .where(condition)
     .orderBy(order)
     .offset((page - 1) * limit)
-    .limit(limit)
+    .limit(18)
   const dataCount = await db
     .select({ count: count() })
     .from(products)

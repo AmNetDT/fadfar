@@ -97,11 +97,11 @@ export const products = pgTable(
     rating: numeric('rating', { precision: 3, scale: 2 })
       .notNull()
       .default('0'),
+    promo_id: integer('promo_id').notNull(),
     numReviews: integer('numReviews').notNull().default(0),
     isFeatured: boolean('isFeatured').default(false).notNull(),
     banner: text('banner'),
     createdAt: timestamp('createdAt').defaultNow().notNull(),
-    promo_id: integer('promo_id').notNull().default(0),
   },
   (table) => {
     return {

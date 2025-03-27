@@ -27,6 +27,7 @@ export async function generateMetadata({
     category?: string
     price?: string
     rating?: string
+    promo_id?: number
   }
 }) {
   const {
@@ -34,12 +35,14 @@ export async function generateMetadata({
     category = 'all',
     price = 'all',
     rating = 'all',
+    promo_id = 'all',
   } = searchParams
   const filters = [
     q !== 'all' && `Query: ${q}`,
     category !== 'all' && `Category: ${category}`,
     price !== 'all' && `Price: ${price}`,
     rating !== 'all' && `Rating: ${rating}`,
+    promo_id !== 'all' && `Promo: ${promo_id}`,
   ].filter(Boolean)
 
   return {
@@ -59,6 +62,7 @@ export default async function SearchPage({
     rating?: string
     sort?: string
     page?: string
+    promo_id?: number
   }
 }) {
   const {
@@ -68,6 +72,7 @@ export default async function SearchPage({
     rating = 'all',
     sort = 'newest',
     page = '1',
+    promo_id = 'all',
   } = searchParams
 
   // Ensure category follows `{ name: string; value: string }` structure
@@ -75,18 +80,38 @@ export default async function SearchPage({
     name: c.name,
     value: c.name,
   }))
-
+  const promoIdNumber = promo_id !== 'all' ? Number(promo_id) : undefined
   const products = await getAllProducts({
     category,
     query: q,
     price,
     rating,
+    promo_id: promoIdNumber,
     page: Number(page),
     sort,
   })
 
   const getFilterUrl = (params: Partial<typeof searchParams>) => {
-    return `/search?${new URLSearchParams({ q, category, price, rating, sort, page, ...params }).toString()}`
+    return `/search?${new URLSearchParams(
+      Object.entries({
+        q,
+        category,
+        price,
+        rating,
+        sort,
+        page,
+        promo_id,
+        ...params,
+      }).reduce(
+        (acc, [key, value]) => {
+          if (value !== undefined) {
+            acc[key] = String(value) //Ensure all values are strings
+          }
+          return acc
+        },
+        {} as Record<string, string>
+      )
+    ).toString()}`
   }
 
   return (
@@ -169,8 +194,8 @@ export default async function SearchPage({
       {/* Products Display Section */}
       <div className="md:col-span-4 space-y-4">
         {/* Search Filters Summary */}
-        <div className="flex justify-between flex-col md:flex-row my-4">
-          <div className="flex items-center space-x-2">
+        <div className="flex flex-nowrap gap-2">
+          <div className="w-4/6 bg-green-100 p-4 border-2 border-green-500 rounded">
             {['q', 'category', 'price', 'rating'].map((key) => {
               const value = searchParams[key as keyof typeof searchParams]
               return value !== 'all' ? (
@@ -189,7 +214,8 @@ export default async function SearchPage({
             )}
           </div>
           {/* Sort Options */}
-          <div>
+
+          <div className="w-2/6 bg-green-50 p-4 border-2 border-green-500 rounded">
             Sort by{' '}
             {sortOrders.map((s) => (
               <Link

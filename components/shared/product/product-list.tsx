@@ -50,7 +50,10 @@ const ProductList = async ({ data }: { data: Product[] }) => {
             <div className="w-1/5 text-right">
               <Link
                 className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href="/search"
+                href={{
+                  pathname: '/search',
+                  query: { category: 'COSMETICS & BEAUTY CARE' },
+                }}
               >
                 View All
               </Link>
@@ -82,7 +85,10 @@ const ProductList = async ({ data }: { data: Product[] }) => {
             <div className="w-1/5 text-right">
               <Link
                 className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href="/search"
+                href={{
+                  pathname: '/search',
+                  query: { category: 'BABY CARES - FOODS' },
+                }}
               >
                 View All
               </Link>
@@ -113,7 +119,10 @@ const ProductList = async ({ data }: { data: Product[] }) => {
             <div className="w-1/5 text-right">
               <Link
                 className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href="/search"
+                href={{
+                  pathname: '/search',
+                  query: { category: 'BISCUITS AND CONFECTIONAL' },
+                }}
               >
                 View All
               </Link>
