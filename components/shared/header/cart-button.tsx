@@ -11,14 +11,13 @@ export default async function CartButton() {
     <Button
       asChild
       variant="ghost"
-      className="text-white hover:text-gray-300 hover:bg-gray-500 ml-3" // Disable hover effect
-      style={{ color: '#ffffff', fontSize: '1.0rem' }}
+      className="text-black hover:text-orange-400"
     >
       <Link href="/cart">
         <ShoppingCart className="mr-1" />
         Cart
         {cart && cart.items.length > 0 && (
-          <Badge className="ml-1">
+          <Badge className="ml-3">
             {cart.items.reduce((a, c) => a + c.qty, 0)}
           </Badge>
         )}

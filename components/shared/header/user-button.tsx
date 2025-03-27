@@ -24,11 +24,7 @@ export default async function UserButton() {
   if (!session)
     return (
       <Link href="/api/auth/signin">
-        <Button
-          variant="ghost"
-          className="relative ml-0 text-white hover:text-gray-300 hover:bg-gray-500"
-          style={{ color: '#ffffff', fontSize: '1.0rem' }}
-        >
+        <Button variant="ghost" className="text-black hover:text-orange-400">
           <UserRound />
           Sign In
         </Button>

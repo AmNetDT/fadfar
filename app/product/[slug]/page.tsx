@@ -116,7 +116,7 @@ const ProductDetails = async ({
         </div>
       </section>
       <section className="mt-10">
-        <h2 className="h2-bold  mb-5">Customer Reviews</h2>
+        <h2 className="h2-bold mb-5">Customer Reviews</h2>
         <ReviewList
           productId={product.id}
           productSlug={product.slug}

@@ -132,12 +132,7 @@ const Header = async () => {
               <DrawerTrigger asChild>
                 <Button
                   variant="outline"
-                  style={{
-                    padding: '23px',
-                    backgroundColor: '#406126',
-                    color: '#ffffff',
-                    border: 'solid 1px #ffffff',
-                  }}
+                  className="text-black hover:text-orange-400xs"
                 >
                   <MenuIcon />
                 </Button>
@@ -145,23 +140,18 @@ const Header = async () => {
               <DrawerContent className="h-full max-w-sm px-0 mx-0">
                 {/* Remove extra padding and margin to extend hover effect */}
                 <DrawerHeader className="px-0">
-                  <DrawerTitle className="text-base px-4 mx-4">
+                  <DrawerTitle className="text-2xl px-4 mx-4 font-extralight">
                     Select a category
                   </DrawerTitle>
                   {/* Keep padding only on the title for alignment */}
-                  <div className="space-y-1">
+                  <div className="space-y-1 font-extralight">
                     {categories.map((category) => (
                       <Button
-                        className="w-full justify-start hover:bg-gray-200 px-4"
+                        className="w-full justify-start hover:bg-gray-200 px-8"
                         /* Use hover:bg-gray-200 to add a background hover effect */
                         variant="ghost"
                         key={category.name}
                         asChild
-                        style={{
-                          fontSize: '1.0rem',
-                          color: 'black',
-                          paddingLeft: '35px',
-                        }}
                       >
                         <DrawerClose asChild>
                           <Link href={`/search?category=${category.name}`}>
