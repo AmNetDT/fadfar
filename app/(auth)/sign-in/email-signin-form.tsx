@@ -49,11 +49,12 @@ export default function EmailSigninForm() {
         Already have an account?{' '}
         <Link
           target="_self"
-          className="link"
-          href={`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+          className="Link"
+          href={`/sign-in-with-password?callbackUrl=${encodeURIComponent(callbackUrl)}`}
         >
           Sign In
-        </Link>
+        </Link>{' '}
+        with password
       </div>
     </form>
   )

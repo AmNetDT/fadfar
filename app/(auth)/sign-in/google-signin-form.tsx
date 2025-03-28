@@ -21,7 +21,7 @@ export default function GoogleSignInForm() {
           alt="google logo"
         />
         <span>
-          {pending ? 'Redirecting to Google...' : 'Sign In with Google'}
+          {pending ? 'Redirecting to Google...' : ' Sign In with Google'}
         </span>
       </Button>
     )
