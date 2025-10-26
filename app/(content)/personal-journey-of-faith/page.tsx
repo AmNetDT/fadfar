@@ -1,15 +1,15 @@
-import { Metadata } from 'next'
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'A Personal Journey of Faith',
+  title: "A Personal Journey of Faith",
   description:
-    'For Sophia, the founder of ChooseLifeandPeace, this brand is deeply personal.',
-}
+    "For Sophia, the founder of ChooseLifeandPeace, this brand is deeply personal.",
+};
 
 const PersonalFaith = () => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 my-16 md:my-28 px-4 md:px-28">
+      {/* <div className="grid grid-cols-1 md:grid-cols-6 gap-4 my-16 md:my-28 px-4 md:px-28">
         <div className="col-span-6 md:col-start-1 md:col-end-7">
           <h1 className="text-2xl md:text-4xl text-center pb-6 md:pb-10">
             A Personal Journey of Faith
@@ -120,9 +120,9 @@ const PersonalFaith = () => {
             wherever we go.
           </p>
         </div>
-      </div>
+      </div> */}
     </>
-  )
-}
+  );
+};
 
-export default PersonalFaith
+export default PersonalFaith;

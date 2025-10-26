@@ -1,6 +1,6 @@
-import DeleteDialog from '@/components/shared/delete-dialog'
-import Pagination from '@/components/shared/pagination'
-import { Button } from '@/components/ui/button'
+import DeleteDialog from "@/components/shared/delete-dialog";
+import Pagination from "@/components/shared/pagination";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,34 +8,34 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { getAllProducts } from '@/lib/actions/product.actions'
-import { deleteProduct } from '@/lib/actions/product.delete'
-import { APP_NAME } from '@/lib/constants'
-import { formatCurrency, formatId } from '@/lib/utils'
-import { Metadata } from 'next'
-import Link from 'next/link'
+} from "@/components/ui/table";
+import { getAllProducts } from "@/lib/actions/product.actions";
+import { deleteProduct } from "@/lib/actions/product.delete";
+import { APP_NAME } from "@/lib/constants";
+import { formatCurrency, formatId } from "@/lib/utils";
+import { Metadata } from "next";
+import Link from "next/link";
 export const metadata: Metadata = {
   title: `Admin Products - ${APP_NAME}`,
-}
+};
 // app/admin/products/page.tsx
 export default async function AdminProductsPage({
   searchParams,
 }: {
   searchParams: {
-    page: string
-    query: string
-    category: string
-  }
+    page: string;
+    query: string;
+    category: string;
+  };
 }) {
-  const page = Number(searchParams.page) || 1
-  const searchText = searchParams.query || ''
-  const category = searchParams.category || ''
+  const page = Number(searchParams.page) || 1;
+  const searchText = searchParams.query || "";
+  const category = searchParams.category || "";
   const products = await getAllProducts({
     query: searchText,
     category,
     page,
-  })
+  });
 
   return (
     <div className="space-y-2">
@@ -54,13 +54,13 @@ export default async function AdminProductsPage({
           <Table className="w-full text-gray-800">
             <TableHeader>
               <TableRow className="bg-gray-100">
-                <TableHead className="text-black">ID</TableHead>
-                <TableHead className="text-black">NAME</TableHead>
-                <TableHead className="text-black text-right">PRICE</TableHead>
-                <TableHead className="text-black">CATEGORY</TableHead>
-                <TableHead className="text-black">STOCK</TableHead>
-                <TableHead className="text-black">RATING</TableHead>
-                <TableHead className="text-black w-[100px]">ACTIONS</TableHead>
+                <TableHead className="text-black">Id</TableHead>
+                <TableHead className="text-black">Name</TableHead>
+                <TableHead className="text-black text-right">Price</TableHead>
+                <TableHead className="text-black">Category</TableHead>
+                <TableHead className="text-black">Stock</TableHead>
+                <TableHead className="text-black">Rating</TableHead>
+                <TableHead className="text-black w-[100px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -97,5 +97,5 @@ export default async function AdminProductsPage({
         )}
       </div>
     </div>
-  )
+  );
 }

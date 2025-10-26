@@ -1,6 +1,6 @@
-import sampleData from '@/lib/sample-data'
-import { formatCurrency } from '@/lib/utils'
-import { Order } from '@/types'
+import sampleData from "@/lib/sample-data";
+import { formatCurrency } from "@/lib/utils";
+import { Order } from "@/types";
 import {
   Body,
   Column,
@@ -14,35 +14,35 @@ import {
   Section,
   Tailwind,
   Text,
-} from '@react-email/components'
+} from "@react-email/components";
 type OrderInformationProps = {
-  order: Order
-}
+  order: Order;
+};
 PurchaseReceiptEmail.PreviewProps = {
   order: {
     id: crypto.randomUUID(),
-    userId: '123',
+    userId: "123",
     user: {
-      name: 'John Doe',
-      email: 'bS8Rn@example.com',
+      name: "John Doe",
+      email: "no-reply@fadfar.com.ng",
     },
-    paymentMethod: 'Stripe',
+    paymentMethod: "Stripe",
     shippingAddress: {
-      fullName: 'John Doe',
-      streetAddress: '123 Main St',
-      city: 'New York',
-      postalCode: '10001',
-      country: 'US',
+      fullName: "John Doe",
+      streetAddress: "123 Main St",
+      city: "New York",
+      postalCode: "10001",
+      country: "US",
     },
     createdAt: new Date(),
-    totalPrice: '110',
-    taxPrice: '10',
-    shippingPrice: '20',
-    itemsPrice: '80',
+    totalPrice: "110",
+    taxPrice: "10",
+    shippingPrice: "20",
+    itemsPrice: "80",
     orderItems: sampleData.products.map((x) => ({
       name: x.name,
-      orderId: '123',
-      productId: '123',
+      orderId: "123",
+      productId: "123",
       slug: x.slug,
       qty: x.stock,
       image: x.images[0],
@@ -53,14 +53,14 @@ PurchaseReceiptEmail.PreviewProps = {
     isPaid: true,
     paidAt: new Date(),
     paymentResult: {
-      id: '123',
-      status: 'succeeded',
-      pricePaid: '12',
-      email_address: 'bS8Rn@example.com',
+      id: "123",
+      status: "succeeded",
+      pricePaid: "12",
+      email_address: "bS8Rn@example.com",
     },
   },
-} satisfies OrderInformationProps
-const dateFormatter = new Intl.DateTimeFormat('en', { dateStyle: 'medium' })
+} satisfies OrderInformationProps;
+const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
 export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
   return (
     <Html>
@@ -105,7 +105,7 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
                       alt={item.name}
                       className="rounded"
                       src={
-                        item.image.startsWith('/')
+                        item.image.startsWith("/")
                           ? `${process.env.NEXT_PUBLIC_SERVER_URL}${item.image}`
                           : item.image
                       }
@@ -122,10 +122,10 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
                 </Row>
               ))}
               {[
-                { name: 'Items', price: order.itemsPrice },
-                { name: 'Tax', price: order.taxPrice },
-                { name: 'Shipping', price: order.shippingPrice },
-                { name: 'Total', price: order.totalPrice },
+                { name: "Items", price: order.itemsPrice },
+                { name: "Tax", price: order.taxPrice },
+                { name: "Shipping", price: order.shippingPrice },
+                { name: "Total", price: order.totalPrice },
               ].map(({ name, price }) => (
                 <Row key={name} className="py-1">
                   <Column align="right">{name}:</Column>
@@ -139,5 +139,5 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
         </Body>
       </Tailwind>
     </Html>
-  )
+  );
 }

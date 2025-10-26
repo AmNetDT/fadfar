@@ -1,14 +1,14 @@
-import Link from 'next/link'
-import { auth } from '@/auth'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { auth } from "@/auth";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { SignOut } from '@/lib/actions/user.actions'
+} from "@/components/ui/dropdown-menu";
+import { SignOut } from "@/lib/actions/user.actions";
 import {
   CircleUserRound,
   LockKeyhole,
@@ -17,116 +17,88 @@ import {
   MailCheck,
   Shield,
   UserRound,
-} from 'lucide-react'
+} from "lucide-react";
 
 export default async function UserButton() {
-  const session = await auth()
-  if (!session)
-    return (
-      <Link href="/api/auth/signin">
-        <Button variant="ghost" className="text-black hover:text-orange-400">
-          <UserRound />
-          Sign In
-        </Button>
-      </Link>
-    )
+  const session = await auth();
+
   return (
-    <div className="flex gap-2 items-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <div className="flex items-center">
+    <div className="flex items-center">
+      {!session ? (
+        <Link href="/api/auth/signin">
+          <Button variant="ghost" className="text-black hover:text-orange-400">
+            <UserRound /> Sign In
+          </Button>
+        </Link>
+      ) : (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="relative ml-0 text-white hover:text-gray-300 hover:bg-gray-500"
-              style={{ color: '#ffffff', fontSize: '1.0rem' }}
+              className="text-gray-600 text-sm hover:text-orange-400 hover:bg-gray-100 p-2"
             >
-              <UserRound />
-              {session.user.name}
+              <UserRound size={24} />
             </Button>
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-60" align="start" forceMount>
-          <DropdownMenuLabel className="font-normal">
-            <Link href="/user/profile">
-              <Button
-                variant="ghost"
-                className="w-full ml-0 pl-0 text-black hover:text-black"
-                style={{ color: '#555555', fontSize: '1.0rem' }}
-              >
-                <MailCheck />
-                &nbsp; {session.user.email}
-              </Button>
-            </Link>
-          </DropdownMenuLabel>
-
-          <DropdownMenuItem>
-            <Link href="/user/profile">
-              <Button
-                variant="ghost"
-                className="w-full text-black hover:text-black"
-                style={{ color: '#555555', fontSize: '1.0rem' }}
-              >
-                <CircleUserRound />
-                &nbsp;My Account
-              </Button>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem>
-            <Link href="/user/change-password">
-              <Button
-                variant="ghost"
-                className="w-full text-black hover:text-black"
-                style={{ color: '#555555', fontSize: '1.0rem' }}
-              >
-                <LockKeyhole />
-                &nbsp;Change Password
-              </Button>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem>
-            <Link href="/user/orders">
-              <Button
-                variant="ghost"
-                className="w-full text-black hover:text-black"
-                style={{ color: '#555555', fontSize: '1.0rem' }}
-              >
-                <Logs />
-                &nbsp;Order History
-              </Button>
-            </Link>
-          </DropdownMenuItem>
-
-          {session.user.role === 'admin' && (
-            <DropdownMenuItem>
-              <Link href="/admin/overview">
-                <Button
-                  variant="ghost"
-                  className="w-full text-black hover:text-black"
-                  style={{ color: '#555555', fontSize: '1.0rem' }}
-                >
-                  <Shield />
-                  &nbsp;Admin
-                </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-60" align="end" forceMount>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1 p-2">
+                <p className="text-sm font-medium leading-none truncate">
+                  {session.user.name}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {session.user.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link href="/user/profile">
+                <div className="flex items-center">
+                  <CircleUserRound className="mr-2 h-4 w-4" />
+                  <span>My Account</span>
+                </div>
               </Link>
             </DropdownMenuItem>
-          )}
-
-          <DropdownMenuItem className="p-0 mb-1">
-            <form action={SignOut} className="w-full">
-              <Button
-                className="w-full py-4 pl-7 h-4 justify-start text-black hover:text-gray-600"
-                style={{ fontSize: '1.0rem' }}
-                variant="ghost"
-              >
-                <LogOut />
-                &nbsp;Sign Out
-              </Button>
-            </form>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <DropdownMenuItem asChild>
+              <Link href="/user/change-password">
+                <div className="flex items-center">
+                  <LockKeyhole className="mr-2 h-4 w-4" />
+                  <span>Change Password</span>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/user/orders">
+                <div className="flex items-center">
+                  <Logs className="mr-2 h-4 w-4" />
+                  <span>Order History</span>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            {session.user.role === "admin" && (
+              <DropdownMenuItem asChild>
+                <Link href="/admin/overview">
+                  <div className="flex items-center">
+                    <Shield className="mr-2 h-4 w-4" />
+                    <span>Admin</span>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem className="p-0 mb-1" asChild>
+              <form action={SignOut} className="w-full">
+                <button
+                  type="submit"
+                  className="w-full text-left py-2 px-4 flex items-center hover:bg-gray-100"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sign Out</span>
+                </button>
+              </form>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
-  )
+  );
 }

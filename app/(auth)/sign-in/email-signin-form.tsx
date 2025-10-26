@@ -34,11 +34,11 @@ export default function EmailSigninForm() {
           <Input
             id="user_email"
             name="email"
-            placeholder="m@example.com"
+            placeholder="Please, type your email"
             required
             type="email"
             style={{ width: '100%', height: '50%' }}
-            className="link border-2 border-orange-500 p-4 transition duration-150 bg-orange-50 rounded-none mb-10 text-center"
+            className="link border-2 border-orange-500 p-4 transition duration-150 bg-orange-50 rounded-none mb-10 text-left"
           />
         </div>
         <div className="space-y-2">

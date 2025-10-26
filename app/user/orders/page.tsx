@@ -1,4 +1,4 @@
-import Pagination from '@/components/shared/pagination'
+import Pagination from "@/components/shared/pagination";
 import {
   Table,
   TableBody,
@@ -6,26 +6,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { getMyOrders } from '@/lib/actions/order.actions'
-import { APP_NAME } from '@/lib/constants'
-import { formatCurrency, formatDateTime } from '@/lib/utils'
-import { Metadata } from 'next'
-import Link from 'next/link'
+} from "@/components/ui/table";
+import { getMyOrders } from "@/lib/actions/order.actions";
+import { APP_NAME } from "@/lib/constants";
+import { formatCurrency, formatDateTime } from "@/lib/utils";
+import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: `My Orders - ${APP_NAME}`,
-}
+};
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams: { page: string }
+  searchParams: { page: string };
 }) {
-  const page = Number(searchParams.page) || 1
+  const page = Number(searchParams.page) || 1;
   const orders = await getMyOrders({
     page,
     limit: 6,
-  })
+  });
   return (
     <div className="space-y-2">
       <h1 className="text-2xl font-semibold text-gray-600 my-4">Orders</h1>
@@ -33,12 +33,12 @@ export default async function OrdersPage({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>DATE</TableHead>
-              <TableHead>TOTAL</TableHead>
-              <TableHead>PAID</TableHead>
-              <TableHead>DELIVERED</TableHead>
-              <TableHead>ACTIONS</TableHead>
+              <TableHead>Id</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Total</TableHead>
+              <TableHead>Paid</TableHead>
+              <TableHead>Delivered</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -52,12 +52,12 @@ export default async function OrdersPage({
                 <TableCell>
                   {order.isPaid && order.paidAt
                     ? formatDateTime(order.paidAt).dateTime
-                    : 'not paid'}
+                    : "not paid"}
                 </TableCell>
                 <TableCell>
                   {order.isDelivered && order.deliveredAt
                     ? formatDateTime(order.deliveredAt).dateTime
-                    : 'not delivered'}
+                    : "not delivered"}
                 </TableCell>
                 <TableCell>
                   <Link href={`/order/${order.id}`}>
@@ -73,5 +73,5 @@ export default async function OrdersPage({
         )}
       </div>
     </div>
-  )
+  );
 }

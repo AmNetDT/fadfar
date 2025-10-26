@@ -1,15 +1,15 @@
-import { Metadata } from 'next'
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'A Personal Journey of Faith',
+  title: "A Personal Journey of Faith",
   description:
-    'For Sophia, the founder of ChooseLifeandPeace, this brand is deeply personal.',
-}
+    "For Sophia, the founder of ChooseLifeandPeace, this brand is deeply personal.",
+};
 
 const CustomerSupport = () => {
   return (
     <>
-      <div className="my-16 sm:my-28 grid grid-cols-1 sm:grid-cols-6 gap-4 px-4 sm:px-28">
+      {/* <div className="my-16 sm:my-28 grid grid-cols-1 sm:grid-cols-6 gap-4 px-4 sm:px-28">
         <div className="col-start-1 col-end-7">
           <h1 className="text-2xl sm:text-4xl text-center pb-6 sm:pb-10">
             Customer Support
@@ -20,9 +20,9 @@ const CustomerSupport = () => {
             with your order, our support team is here to help.
           </p>
         </div>
-      </div>
+      </div> */}
 
-      <div className="py-16 sm:py-24 grid gap-8 sm:gap-4 grid-cols-1 sm:grid-cols-3">
+      {/* <div className="py-16 sm:py-24 grid gap-8 sm:gap-4 grid-cols-1 sm:grid-cols-3">
         <div className="p-6 sm:p-8 border-y-4 sm:border-y-0 sm:border-l-4 border-zinc-700 sm:col-span-2 sm:mr-8">
           <h1 className="text-2xl sm:text-4xl text-center pb-6 sm:pb-10">
             How to Contact Us
@@ -67,9 +67,9 @@ const CustomerSupport = () => {
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
     </>
-  )
-}
+  );
+};
 
-export default CustomerSupport
+export default CustomerSupport;
