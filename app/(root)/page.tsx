@@ -1,8 +1,8 @@
-import ProductList from '@/components/shared/product/product-list'
-import { getLatestProducts } from '@/lib/actions/product.actions'
+import ProductList from "@/components/shared/product/product-list";
+import { getLatestProducts } from "@/lib/actions/product.actions";
 
 export default async function Home() {
-  const latestProducts = await getLatestProducts()
+  const latestProducts = await getLatestProducts();
   return (
     <div className="space-y-8">
       <div>
@@ -11,5 +11,5 @@ export default async function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import { auth } from '@/auth'
-import DeleteDialog from '@/components/shared/delete-dialog'
-import Pagination from '@/components/shared/pagination'
-import { Button } from '@/components/ui/button'
+import { auth } from "@/auth";
+import DeleteDialog from "@/components/shared/delete-dialog";
+import Pagination from "@/components/shared/pagination";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,22 +9,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { deleteUser, getAllUsers } from '@/lib/actions/user.actions'
-import { formatId } from '@/lib/utils'
-import Link from 'next/link'
+} from "@/components/ui/table";
+import { deleteUser, getAllUsers } from "@/lib/actions/user.actions";
+import { formatId } from "@/lib/utils";
+import Link from "next/link";
 
 export default async function AdminUser({
   searchParams,
 }: {
-  searchParams: { page: string }
+  searchParams: { page: string };
 }) {
-  const session = await auth()
-  if (session?.user.role !== 'admin')
-    throw new Error('Admin permission required')
+  const session = await auth();
+  if (session?.user.role !== "admin")
+    throw new Error("Admin permission required");
 
-  const page = Number(searchParams.page) || 1
-  const users = await getAllUsers({ page })
+  const page = Number(searchParams.page) || 1;
+  const users = await getAllUsers({ page });
 
   return (
     <div className="space-y-2">
@@ -36,11 +36,11 @@ export default async function AdminUser({
           <Table className="w-full text-gray-800">
             <TableHeader>
               <TableRow className="bg-gray-100">
-                <TableHead className="text-black">ID</TableHead>
-                <TableHead className="text-black">NAME</TableHead>
-                <TableHead className="text-black">EMAIL</TableHead>
-                <TableHead className="text-black">ROLE</TableHead>
-                <TableHead className="text-black">ACTIONS</TableHead>
+                <TableHead className="text-black">Id</TableHead>
+                <TableHead className="text-black">Name</TableHead>
+                <TableHead className="text-black">Email`</TableHead>
+                <TableHead className="text-black">Role</TableHead>
+                <TableHead className="text-black">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -71,5 +71,5 @@ export default async function AdminUser({
         </div>
       </div>
     </div>
-  )
+  );
 }

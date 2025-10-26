@@ -1,179 +1,135 @@
-import { Product } from '@/types'
-import ProductCard from './product-card'
-import ProductCategory from './product-category'
-import Link from 'next/link'
+import { Product } from "@/types";
+import ProductCard from "./product-card";
+import ProductCategory from "./product-category";
+import Link from "next/link";
 
-const ProductList = async ({ data }: { data: Product[] }) => {
-  // Group products by category and get the last updated one
+interface ProductListProps {
+  data: Product[];
+}
+
+const ProductList = async ({ data }: ProductListProps) => {
+  // ✅ Get latest product per category
   const latestProducts = Object.values(
     data.reduce(
       (acc, product) => {
         if (
-          !acc[product.brand] ||
-          product.createdAt > acc[product.brand].createdAt
+          !acc[product.category] ||
+          product.createdAt > acc[product.category].createdAt
         ) {
-          acc[product.category] = product
+          acc[product.category] = product;
         }
-        return acc
+        return acc;
       },
       {} as Record<string, Product>
     )
-  )
+  );
+
+  // ✅ Helper: Render a reusable product section
+  const renderSection = (
+    title: string,
+    color: string,
+    bgColor: string,
+    queryCategory: string
+  ) => {
+    const filtered = data
+      .filter((product) => product.category === queryCategory)
+      .slice(0, 6);
+
+    if (filtered.length === 0) return null;
+
+    return (
+      <section className="mb-12">
+        <div
+          className={`flex flex-wrap justify-between items-center text-white px-4 py-3 rounded-t-xl ${color} shadow-md`}
+        >
+          <h2 className="text-lg font-semibold">{title}</h2>
+          <Link
+            href={{
+              pathname: "/search",
+              query: { category: queryCategory },
+            }}
+            className="text-sm border border-white px-3 py-1 rounded-lg hover:bg-white hover:text-gray-800 transition"
+          >
+            View All
+          </Link>
+        </div>
+
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 p-3 ${bgColor} border-t-2 border-yellow-300 rounded-b-xl`}
+        >
+          {filtered.map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+      </section>
+    );
+  };
 
   return (
-    <>
-      {data.length > 0 ? (
-        <div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-            {/* I used truncate to restrict the paragraph sentence from spreading to another line */}
-            {data
-              .filter(
-                (product: Product) =>
-                  product.category === 'CLOTHES AND UNDERWEARS'
-              )
-              .slice(0, 6) // limit to 6 items
-              .map((product: Product) => (
-                <ProductCategory key={product.slug} product={product} />
-              ))}
-          </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
-        </div>
+    <div className="container mx-auto px-3 md:px-6 py-8 space-y-12">
+      {/* ✅ Clothes and Underwears */}
+      {renderSection(
+        "Clothes & Underwears",
+        "bg-emerald-700",
+        "bg-emerald-50",
+        "Clothes and Underwears"
       )}
 
-      {data.length > 0 ? (
-        <div>
-          <div className="flex text-left bg-lime-600 text-slate-100 p-4 rounded-t-lg">
-            <div className="w-4/5">COSMETICS &amp; BEAUTY CARE</div>
-            <div className="w-1/5 text-right">
-              <Link
-                className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href={{
-                  pathname: '/search',
-                  query: { category: 'COSMETICS & BEAUTY CARE' },
-                }}
-              >
-                View All
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-5 bg-lime-50 border-t-2 border-yellow-300">
-            {/* I used truncate to restrict the paragraph sentence from spreading to another line */}
-            {data
-              .filter(
-                (product: Product) =>
-                  product.category === 'COSMETICS & BEAUTY CARE'
-              )
-              .slice(0, 6) // limit to 6 items
-              .map((product: Product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-          </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
-        </div>
+      {/* ✅ Cosmetics */}
+      {renderSection(
+        "Cosmetics & Beauty Care",
+        "bg-lime-700",
+        "bg-lime-50",
+        "Cosmetics & Beauty Care"
       )}
 
-      {data.length > 0 ? (
-        <div>
-          <div className="flex text-left bg-orange-600 text-slate-100 p-4 rounded-t-lg">
-            <div className="w-4/5">BABY CARES - FOODS</div>
-            <div className="w-1/5 text-right">
-              <Link
-                className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href={{
-                  pathname: '/search',
-                  query: { category: 'BABY CARES - FOODS' },
-                }}
-              >
-                View All
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-6 gap-2 -mb-5 bg-orange-50 border-t-2 border-yellow-300">
-            {/* I used truncate to restrict the paragraph sentence from spreading to another line */}
-            {data
-              .filter(
-                (product: Product) => product.category === 'BABY CARES - FOODS'
-              )
-              .slice(0, 6) // limit to 6 items
-              .map((product: Product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-          </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
-        </div>
+      {/* ✅ Baby Care */}
+      {renderSection(
+        "Baby Cares - Foods",
+        "bg-orange-600",
+        "bg-orange-50",
+        "Baby Cares - Foods"
       )}
 
-      {data.length > 0 ? (
-        <div>
-          <div className="flex text-left bg-blue-900 text-slate-100 p-4 rounded-t-lg">
-            <div className="w-4/5">BISCUITS AND CONFECTIONAL</div>
-            <div className="w-1/5 text-right">
-              <Link
-                className="rounded border-2 p-2 border-slate-100 text-slate-100"
-                href={{
-                  pathname: '/search',
-                  query: { category: 'BISCUITS AND CONFECTIONAL' },
-                }}
-              >
-                View All
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 bg-blue-50 lg:grid-cols-6 gap-2 p-1">
-            {data
-              .filter(
-                (product: Product) =>
-                  product.category === 'BISCUITS AND CONFECTIONAL'
-              )
-              .slice(0, 6) // limit to 6 items
-              .map((product: Product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-          </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
-        </div>
+      {/* ✅ Biscuits */}
+      {renderSection(
+        "Biscuits & Confectionary",
+        "bg-blue-800",
+        "bg-blue-50",
+        "Biscuits and Confectional"
       )}
 
-      {latestProducts.length > 0 ? (
-        <div>
-          <div className="flex text-left text-2xl text-slate-700 px-0 pb-2 mt-20 mb-4 border-b-8 border-slate-500 text-nowrap">
-            <div className="w-4/5">Trending Products</div>
-            <div className="w-1/5 text-right">
-              <Link
-                className="rounded border-2 p-2 border-gray-600 text-gray-600 text-sm"
-                href="/search"
-              >
-                View All
-              </Link>
-            </div>
+      {/* ✅ Trending Section */}
+      {latestProducts.length > 0 && (
+        <section>
+          <div className="flex flex-wrap justify-between items-center border-b-4 border-gray-600 pb-3 mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">
+              Trending Products
+            </h2>
+            <Link
+              href="/search"
+              className="text-sm border border-gray-700 px-3 py-1 rounded-lg hover:bg-gray-700 hover:text-white transition"
+            >
+              View All
+            </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {latestProducts.map((product) => (
-              <div key={product.slug}>
-                <ProductCard product={product} />
-              </div>
+              <ProductCard key={product.slug} product={product} />
             ))}
           </div>
-        </div>
-      ) : (
-        <div>
-          <p>No product found</p>
+        </section>
+      )}
+
+      {/* Fallback */}
+      {data.length === 0 && (
+        <div className="text-center text-gray-500 py-10">
+          <p>No products found.</p>
         </div>
       )}
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default ProductList
+export default ProductList;

@@ -1,15 +1,15 @@
-import { Metadata } from 'next'
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Return Policy for ChooseLifeandPeace Online Shop',
+  title: "Return Policy for ChooseLifeandPeace Online Shop",
   description:
-    'At Choose Life and Peace, we are committed to ensuring your satisfaction with every purchase.',
-}
+    "At Choose Life and Peace, we are committed to ensuring your satisfaction with every purchase.",
+};
 
 const Faq = () => {
   return (
     <>
-      <div className="flex justify-center items-center my-16 sm:my-28 px-4">
+      {/* <div className="flex justify-center items-center my-16 sm:my-28 px-4">
         <div className="w-full max-w-5xl">
           <h1 className="text-2xl sm:text-4xl text-center pb-6 sm:pb-10">
             Frequently Asked Questions (FAQ)
@@ -166,9 +166,9 @@ const Faq = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
-  )
-}
+  );
+};
 
-export default Faq
+export default Faq;

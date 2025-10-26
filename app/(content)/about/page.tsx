@@ -1,17 +1,17 @@
-import Hero from '@/components/Hero/page'
-import { Metadata } from 'next'
+import Hero from "@/components/Hero/page";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title:
-    'ChooseLifeandPeace.com: A Divine Calling to Inspire, Uplift, and Transform Lives',
-  description: 'This is About Page for Startup Nextjs Template',
-}
+    "ChooseLifeandPeace.com: A Divine Calling to Inspire, Uplift, and Transform Lives",
+  description: "This is About Page for Startup Nextjs Template",
+};
 
 const AboutPage = () => {
   return (
     <>
       <Hero />
-      <div className="bg-sectionLayout-300 text-white px-4 py-20 sm:py-36 sm:px-6 grid gap-4 grid-cols-1 sm:grid-cols-6">
+      {/* <div className="bg-sectionLayout-300 text-white px-4 py-20 sm:py-36 sm:px-6 grid gap-4 grid-cols-1 sm:grid-cols-6">
         <div className="sm:col-start-2 sm:col-span-4">
           <h1 className="text-2xl sm:text-4xl text-center pb-6 sm:pb-10">
             Choose Life and Peace
@@ -33,9 +33,9 @@ const AboutPage = () => {
             individuals toward the eternal truth found in Jesus Christ.
           </p>
         </div>
-      </div>
+      </div> */}
 
-      <div className="py-20 sm:py-36 grid gap-8 grid-cols-1 sm:grid-cols-3">
+      {/* <div className="py-20 sm:py-36 grid gap-8 grid-cols-1 sm:grid-cols-3">
         <div className="p-6 sm:p-8 border-l-0 sm:border-l-4 border-y-4 border-zinc-700 sm:col-span-2 sm:mr-8">
           <h1 className="text-2xl sm:text-4xl text-left pb-6 sm:pb-10">
             Our Mission
@@ -103,9 +103,9 @@ const AboutPage = () => {
             gospel and to reflect the love of Christ in everything they do.
           </p>
         </div>
-      </div>
+      </div> */}
     </>
-  )
-}
+  );
+};
 
-export default AboutPage
+export default AboutPage;
