@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 import { formatCurrency } from "@/lib/utils";
 import { Cart } from "@/types";
-import { Loader, Minus, Plus } from "lucide-react";
+import { Loader, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,9 +25,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
-  // Optimized helper function to encapsulate the update logic
   const handleUpdateItem = async (item: any, action: "add" | "remove") => {
-    // Disable buttons and start transition immediately
     startTransition(async () => {
       const res =
         action === "add"
@@ -40,41 +38,42 @@ export default function CartForm({ cart }: { cart?: Cart }) {
           description: res.message,
         });
       }
-      // Re-fetch or re-route if necessary to update the UI
       router.refresh();
     });
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8">
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white">
-        Shopping Cart
+    <div className="container mx-auto px-4 md:px-8 py-8">
+      <h1 className="text-3xl md:text-4xl font-extrabold mb-8 text-gray-900 dark:text-gray-100 tracking-tight flex items-center gap-2">
+        <ShoppingBag className="w-8 h-8 text-primary" />
+        Your Shopping Cart
       </h1>
 
       {!cart || cart.items.length === 0 ? (
-        <Card className="flex flex-col items-center justify-center p-8 md:p-12 text-center shadow-lg">
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4">
-            Your cart is empty.
+        <Card className="flex flex-col items-center justify-center p-10 md:p-16 text-center shadow-lg rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6">
+            Your cart is currently empty.
           </p>
           <Link href="/">
-            <Button className="mt-4 px-8 py-3 text-base">Start Shopping</Button>
+            <Button className="mt-2 px-6 py-3 rounded-full text-base font-medium transition-all duration-200 hover:scale-105">
+              Continue Shopping
+            </Button>
           </Link>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div className="md:col-span-2 lg:col-span-3">
-            <Card>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Cart Items */}
+          <div className="lg:col-span-3">
+            <Card className="rounded-2xl shadow-md overflow-hidden border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-gray-50 dark:bg-gray-800">
-                      <TableHead className="w-[100px] font-semibold text-gray-700 dark:text-gray-200">
-                        Item
-                      </TableHead>
-                      <TableHead className="font-semibold text-center text-gray-700 dark:text-gray-200">
+                    <TableRow className="bg-gray-100/60 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200">
+                      <TableHead className="font-semibold">Product</TableHead>
+                      <TableHead className="text-center font-semibold">
                         Quantity
                       </TableHead>
-                      <TableHead className="font-semibold text-right text-gray-700 dark:text-gray-200">
+                      <TableHead className="text-right font-semibold">
                         Price
                       </TableHead>
                     </TableRow>
@@ -83,30 +82,28 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                     {cart.items.map((item) => (
                       <TableRow
                         key={item.slug}
-                        className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50"
+                        className="hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-all duration-150"
                       >
                         <TableCell>
                           <Link
                             href={`/product/${item.slug}`}
-                            className="flex items-center space-x-4 group"
+                            className="flex items-center gap-4 group"
                           >
-                            <div className="relative w-16 h-16 shrink-0">
+                            <div className="relative w-16 h-16 rounded-md overflow-hidden border border-gray-200 dark:border-gray-700">
                               <Image
                                 src={item.image}
                                 alt={item.name}
                                 fill
-                                style={{ objectFit: "cover" }}
-                                className="rounded-md border"
                                 sizes="(max-width: 768px) 100vw, 33vw"
+                                className="object-cover"
                               />
                             </div>
-                            <div className="flex-grow">
-                              <span className="font-medium group-hover:underline">
-                                {item.name}
-                              </span>
-                            </div>
+                            <span className="font-medium text-gray-800 dark:text-gray-200 group-hover:underline line-clamp-2">
+                              {item.name}
+                            </span>
                           </Link>
                         </TableCell>
+
                         <TableCell className="text-center">
                           <div className="flex items-center justify-center gap-2">
                             <Button
@@ -114,6 +111,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                               variant="outline"
                               size="icon"
                               onClick={() => handleUpdateItem(item, "remove")}
+                              className="rounded-full w-8 h-8"
                             >
                               {isPending ? (
                                 <Loader className="w-4 h-4 animate-spin" />
@@ -121,7 +119,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                                 <Minus className="w-4 h-4" />
                               )}
                             </Button>
-                            <span className="min-w-[20px] text-center font-medium">
+                            <span className="min-w-[24px] font-semibold">
                               {item.qty}
                             </span>
                             <Button
@@ -131,6 +129,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                               variant="outline"
                               size="icon"
                               onClick={() => handleUpdateItem(item, "add")}
+                              className="rounded-full w-8 h-8"
                             >
                               {isPending ? (
                                 <Loader className="w-4 h-4 animate-spin" />
@@ -140,7 +139,8 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                             </Button>
                           </div>
                         </TableCell>
-                        <TableCell className="text-right font-semibold">
+
+                        <TableCell className="text-right font-semibold text-gray-800 dark:text-gray-100">
                           {formatCurrency(item.price)}
                         </TableCell>
                       </TableRow>
@@ -151,31 +151,37 @@ export default function CartForm({ cart }: { cart?: Cart }) {
             </Card>
           </div>
 
-          <div>
-            <Card className="sticky top-4">
-              <CardContent className="p-6">
-                <div className="pb-3 text-xl font-semibold border-b dark:border-gray-700">
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <Card className="rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 sticky top-6">
+              <CardContent className="p-6 space-y-4">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-3">
                   Order Summary
-                </div>
-                <div className="flex justify-between items-center py-4 text-lg">
-                  <span>
+                </h2>
+
+                <div className="flex justify-between items-center pt-2">
+                  <span className="text-gray-700 dark:text-gray-300">
                     Subtotal ({cart.items.reduce((a, c) => a + c.qty, 0)} items)
                   </span>
-                  <span className="font-bold">
+                  <span className="font-bold text-lg">
                     {formatCurrency(cart.itemsPrice)}
                   </span>
                 </div>
               </CardContent>
-              <CardFooter>
+
+              <CardFooter className="p-6 pt-0">
                 <Button
                   onClick={() =>
                     startTransition(() => router.push("/shipping-address"))
                   }
-                  className="w-full text-base py-6 font-semibold transition-transform duration-200 hover:scale-105"
                   disabled={isPending}
+                  className="w-full py-6 font-semibold text-lg rounded-full transition-transform duration-200 hover:scale-105"
                 >
                   {isPending ? (
-                    <Loader className="animate-spin w-5 h-5 mr-2" />
+                    <>
+                      <Loader className="animate-spin w-5 h-5 mr-2" />{" "}
+                      Loading...
+                    </>
                   ) : (
                     "Proceed to Checkout"
                   )}
