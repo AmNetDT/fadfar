@@ -1,43 +1,43 @@
-import { cwd } from 'node:process'
-import { loadEnvConfig } from '@next/env'
+import { cwd } from "node:process";
+import { loadEnvConfig } from "@next/env";
 
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Client } from 'pg'
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Client } from "pg";
 
-import * as schema from './schema'
-import sampleData from '@/lib/sample-data'
+import * as schema from "./schema";
+//import sampleData from '@/lib/sample-data'
 
-loadEnvConfig(cwd())
+loadEnvConfig(cwd());
 
 const main = async () => {
   try {
     const client = new Client({
       //connectionString: process.env.POSTGRES_URL,
       connectionString: process.env.DATABASE_URL,
-    })
-    await client.connect()
-    const db = drizzle(client)
+    });
+    await client.connect();
+    const db = drizzle(client);
 
-    await db.delete(schema.accounts)
-    await db.delete(schema.users)
-    await db.delete(schema.products)
-    await db.delete(schema.promo)
+    await db.delete(schema.accounts);
+    await db.delete(schema.users);
+    await db.delete(schema.products);
+    await db.delete(schema.promo);
 
-    const resUsers = await db
-      .insert(schema.users)
-      .values(sampleData.users)
-      .returning()
-    const resProducts = await db
-      .insert(schema.products)
-      .values(sampleData.products)
-      .onConflictDoNothing() // This will ignore duplicate entries
-      .returning()
-    console.log({ resProducts, resUsers })
-    await client.end()
+    // const resUsers = await db
+    //   .insert(schema.users)
+    //   .values(sampleData.users)
+    //   .returning();
+    // // const resProducts = await db
+    // //   .insert(schema.products)
+    // //   .values(sampleData.products)
+    // //   .onConflictDoNothing() // This will ignore duplicate entries
+    // //   .returning()
+    // console.log({ /*resProducts,*/ resUsers });
+    await client.end();
   } catch (error) {
-    console.error(error)
-    throw new Error('Failed to seed database')
+    console.error(error);
+    throw new Error("Failed to seed database");
   }
-}
+};
 
-main()
+main();

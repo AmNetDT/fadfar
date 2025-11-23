@@ -1,6 +1,5 @@
 import { Product } from "@/types";
 import ProductCard from "./product-card";
-import ProductCategory from "./product-category";
 import Link from "next/link";
 
 interface ProductListProps {

@@ -1,45 +1,72 @@
-import { notFound } from 'next/navigation'
+import { notFound } from "next/navigation";
+import ProductImages from "@/components/shared/product/product-images";
+import ProductPrice from "@/components/shared/product/product-price";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { getProductBySlug } from "@/lib/actions/product.actions";
+import { APP_NAME } from "@/lib/constants";
+import AddToCart from "@/components/shared/product/add-to-cart";
+import { getMyCart } from "@/lib/actions/cart.actions";
+import { round2 } from "@/lib/utils";
+import ReviewList from "./review-list";
+import { auth } from "@/auth";
+import Rating from "@/components/shared/product/rating";
+import CartCheckout from "@/components/ui/cartcheckout";
 
-import ProductImages from '@/components/shared/product/product-images'
-import ProductPrice from '@/components/shared/product/product-price'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { getProductBySlug } from '@/lib/actions/product.actions'
-import { APP_NAME } from '@/lib/constants'
-import AddToCart from '@/components/shared/product/add-to-cart'
-import { getMyCart } from '@/lib/actions/cart.actions'
-import { round2 } from '@/lib/utils'
+//
+// ─── HELPERS ────────────────────────────────────────────────────────────────
+//
 
-import ReviewList from './review-list'
-import { auth } from '@/auth'
-import Rating from '@/components/shared/product/rating'
-import CartCheckout from '@/components/ui/cartcheckout'
+/**
+ * Convert the string‑typed money fields that `getMyCart` returns
+ * into numbers so they match the `Cart` type.
+ */
+function normalizeCart(cart: Awaited<ReturnType<typeof getMyCart>>) {
+  if (!cart) return undefined;
+
+  return {
+    ...cart,
+    itemsPrice: Number(cart.itemsPrice),
+    shippingPrice: Number(cart.shippingPrice),
+    taxPrice: Number(cart.taxPrice),
+    totalPrice: Number(cart.totalPrice),
+  };
+}
+
+//
+// ─── PAGE ───────────────────────────────────────────────────────────────────
+//
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
-  const product = await getProductBySlug(params.slug)
+  const product = await getProductBySlug(params.slug);
   if (!product) {
-    return { title: 'Product not found' }
+    return { title: "Product not found" };
   }
   return {
     title: `${product.name} - ${APP_NAME}`,
     description: product.description,
-  }
+  };
 }
 
 const ProductDetails = async ({
   params: { slug },
+  searchParams: { page, color, size },
 }: {
-  params: { slug: string }
-  searchParams: { page: string; color: string; size: string }
+  params: { slug: string };
+  searchParams: { page: string; color: string; size: string };
 }) => {
-  const product = await getProductBySlug(slug)
-  if (!product) notFound()
-  const cart = await getMyCart()
-  const session = await auth()
+  const product = await getProductBySlug(slug);
+  if (!product) notFound();
+
+  // ── Get and normalise the cart ──────────────────────────────────────────
+  const rawCart = await getMyCart();
+  const cart = normalizeCart(rawCart);
+
+  const session = await auth();
 
   return (
     <>
@@ -55,7 +82,6 @@ const ProductDetails = async ({
                 {product.brand} {product.category}
               </p>
               <h1 className="h3-bold">{product.name}</h1>
-
               <Rating
                 value={Number(product.rating)}
                 caption={`${product.numReviews} reviews`}
@@ -71,10 +97,11 @@ const ProductDetails = async ({
             </div>
 
             <div>
-              <h3 className="h3-bold  mb-5">Description</h3>
+              <h3 className="h3-bold mb-5">Description</h3>
               <p>{product.description}</p>
             </div>
           </div>
+
           <div>
             <Card className="p-0 rounded-none">
               <CardContent className="p-4">
@@ -103,18 +130,21 @@ const ProductDetails = async ({
                         price: round2(product.price),
                         qty: 1,
                         image: product.images![0],
+                        // 👇 `countInStock` is required by the CartItem type
+                        countInStock: product.stock,
                       }}
                     />
                   </div>
                 )}
               </CardContent>
             </Card>
-            {/* Cart Checkout Section */}
 
+            {/* Cart Checkout Section */}
             <CartCheckout cart={cart} isPending={false} />
           </div>
         </div>
       </section>
+
       <section className="mt-10">
         <h2 className="h2-bold mb-5">Customer Reviews</h2>
         <ReviewList
@@ -124,7 +154,7 @@ const ProductDetails = async ({
         />
       </section>
     </>
-  )
-}
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;
