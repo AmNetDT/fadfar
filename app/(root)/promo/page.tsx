@@ -1,35 +1,31 @@
 import type { InferGetServerSidePropsType } from "next";
-
-import Promo from "@/components/shared/product/promo"; // <-- corrected path
+import Promo from "@/components/shared/product/promo";
 import { getAllProducts } from "@/lib/actions/product.actions";
 import type { Product } from "@/types";
 
-// -------------------------------------------------------------------
-// Page props type (Next.js 13+ App Router)
-interface PageProps {
+// Props that Next will give to the page
+interface PromoPageProps {
   params: { [key: string]: string | string[] | undefined };
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-// -------------------------------------------------------------------
-// Helper type for the shape returned by getAllProducts
+// Response shape from your server action
 type ProductsResponse = {
   data?: Product[];
   error?: string;
 };
 
-// -------------------------------------------------------------------
-export default async function PromoPage({}: PageProps) {
-  // Fetch all products; filter on the server if your action supports it
-  //const response: ProductsResponse = await getAllProducts({ promo_id: 2 });
+export default async function PromoPage({
+  params,
+  searchParams,
+}: PromoPageProps) {
   const response = await getAllProducts({
-    query: "", // empty string if you don’t need a search term
-    category: "", // empty string if you don’t want to filter by category
-    page: 1, // first page
-    promo_id: 2, // your filter
+    query: "",
+    category: "",
+    page: 1,
+    promo_id: 2,
   });
 
-  // Guard against missing data
   const products = response?.data ?? [];
 
   return (
