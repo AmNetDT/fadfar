@@ -1,16 +1,20 @@
-import React from 'react'
-import { getAllPromo } from '@/lib/actions/product.actions'
-import Header from '@/components/shared/header'
-import Footer from '@/components/shared/footer'
-import ProductPromotion from '@/components/shared/product/product-promotion'
-import Promo from '@/app/(root)/promo/page'
+import React from "react";
+import { getAllPromo } from "@/lib/actions/product.actions";
+import Header from "@/components/shared/header";
+import Footer from "@/components/shared/footer";
+import ProductPromotion from "@/components/shared/product/product-promotion";
+import Promo from "@/components/shared/product//promo";
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const promoProducts = await getAllPromo()
+  const promoProducts = await getAllPromo();
+
+  // `Promo` expects `data?: Product[]`
+  // Ensure we always pass an array (even if the fetch returns something unexpected)
+  const safePromoData = Array.isArray(promoProducts) ? promoProducts : [];
 
   return (
     <div className="flex h-screen flex-col">
@@ -18,11 +22,11 @@ export default async function RootLayout({
       <main className="flex-1 wrapper my-20">
         {children}
         <div className="mt-40">
-          <Promo data={promoProducts} />
+          <Promo data={safePromoData} />
         </div>
       </main>
       <ProductPromotion />
       <Footer />
     </div>
-  )
+  );
 }

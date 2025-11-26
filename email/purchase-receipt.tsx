@@ -15,16 +15,18 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
 type OrderInformationProps = {
   order: Order;
 };
+
 PurchaseReceiptEmail.PreviewProps = {
   order: {
     id: crypto.randomUUID(),
     userId: "123",
     user: {
       name: "John Doe",
-      email: "no-reply@fadfar.com.ng",
+      email: "bS8Rn@example.com",
     },
     paymentMethod: "Stripe",
     shippingAddress: {
@@ -60,7 +62,9 @@ PurchaseReceiptEmail.PreviewProps = {
     },
   },
 } satisfies OrderInformationProps;
+
 const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
+
 export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
   return (
     <Html>

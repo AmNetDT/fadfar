@@ -25,6 +25,14 @@ export default function CartForm({ cart }: { cart?: Cart }) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
+  // -------------------------------------------------
+  // ⿡  Convert string → number for the numeric fields
+  // -------------------------------------------------
+  const itemsPrice = cart?.itemsPrice ? Number(cart.itemsPrice) : 0;
+  const shippingPrice = cart?.shippingPrice ? Number(cart.shippingPrice) : 0;
+  const taxPrice = cart?.taxPrice ? Number(cart.taxPrice) : 0;
+  const totalPrice = cart?.totalPrice ? Number(cart.totalPrice) : 0;
+
   const handleUpdateItem = async (item: any, action: "add" | "remove") => {
     startTransition(async () => {
       const res =
@@ -33,10 +41,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
           : await removeItemFromCart(item.productId);
 
       if (!res.success) {
-        toast({
-          variant: "destructive",
-          description: res.message,
-        });
+        toast({ variant: "destructive", description: res.message });
       }
       router.refresh();
     });
@@ -45,8 +50,7 @@ export default function CartForm({ cart }: { cart?: Cart }) {
   return (
     <div className="container mx-auto px-4 md:px-8 py-8">
       <h1 className="text-3xl md:text-4xl font-extrabold mb-8 text-gray-900 dark:text-gray-100 tracking-tight flex items-center gap-2">
-        <ShoppingBag className="w-8 h-8 text-primary" />
-        Your Shopping Cart
+        <ShoppingBag className="w-8 h-8 text-primary" /> Your Shopping Cart
       </h1>
 
       {!cart || cart.items.length === 0 ? (
@@ -103,7 +107,6 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                             </span>
                           </Link>
                         </TableCell>
-
                         <TableCell className="text-center">
                           <div className="flex items-center justify-center gap-2">
                             <Button
@@ -139,7 +142,6 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                             </Button>
                           </div>
                         </TableCell>
-
                         <TableCell className="text-right font-semibold text-gray-800 dark:text-gray-100">
                           {formatCurrency(item.price)}
                         </TableCell>
@@ -158,17 +160,37 @@ export default function CartForm({ cart }: { cart?: Cart }) {
                 <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-3">
                   Order Summary
                 </h2>
-
                 <div className="flex justify-between items-center pt-2">
                   <span className="text-gray-700 dark:text-gray-300">
                     Subtotal ({cart.items.reduce((a, c) => a + c.qty, 0)} items)
                   </span>
                   <span className="font-bold text-lg">
-                    {formatCurrency(cart.itemsPrice)}
+                    {formatCurrency(itemsPrice)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 dark:text-gray-300">
+                    Shipping
+                  </span>
+                  <span className="font-bold text-lg">
+                    {formatCurrency(shippingPrice)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 dark:text-gray-300">Tax</span>
+                  <span className="font-bold text-lg">
+                    {formatCurrency(taxPrice)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center border-t border-gray-200 dark:border-gray-700 pt-3">
+                  <span className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                    Total
+                  </span>
+                  <span className="font-bold text-xl">
+                    {formatCurrency(totalPrice)}
                   </span>
                 </div>
               </CardContent>
-
               <CardFooter className="p-6 pt-0">
                 <Button
                   onClick={() =>
