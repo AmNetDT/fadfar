@@ -7,6 +7,7 @@ import {
 } from "@/lib/actions/product.actions";
 import { APP_NAME } from "@/lib/constants";
 import Link from "next/link";
+import { useState } from "react";
 
 const sortOrders = ["newest", "lowest", "highest", "rating"];
 const prices = [
@@ -22,17 +23,7 @@ const ratings = [
   { name: "1 star & up", value: "1" },
 ];
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: {
-    q?: string;
-    category?: string;
-    price?: string;
-    rating?: string;
-    promo_id?: number;
-  };
-}) {
+export async function generateMetadata({ searchParams }: any) {
   const {
     q = "all",
     category = "all",
@@ -47,7 +38,6 @@ export async function generateMetadata({
     rating !== "all" && `Rating: ${rating}`,
     promo_id !== "all" && `Promo: ${promo_id}`,
   ].filter(Boolean);
-
   return {
     title: filters.length
       ? `Search ${filters.join(" | ")} - ${APP_NAME}`
@@ -55,19 +45,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: {
-    q?: string;
-    category?: string;
-    price?: string;
-    rating?: string;
-    sort?: string;
-    page?: string;
-    promo_id?: number;
-  };
-}) {
+export default async function SearchPage({ searchParams }: any) {
   const {
     q = "all",
     category = "all",
@@ -78,12 +56,13 @@ export default async function SearchPage({
     promo_id = "all",
   } = searchParams;
 
-  // Ensure category follows `{ name: string; value: string }` structure
-  const categories = (await getAllCategories()).map((c: { name: string }) => ({
+  const categories = (await getAllCategories()).map((c: any) => ({
     name: c.name,
     value: c.name,
   }));
+
   const promoIdNumber = promo_id !== "all" ? Number(promo_id) : undefined;
+
   const products = await getAllProducts({
     category,
     query: q,
@@ -94,7 +73,7 @@ export default async function SearchPage({
     sort,
   });
 
-  const getFilterUrl = (params: Partial<typeof searchParams>) => {
+  const getFilterUrl = (params: any) => {
     return `/search?${new URLSearchParams(
       Object.entries({
         q,
@@ -105,25 +84,106 @@ export default async function SearchPage({
         page,
         promo_id,
         ...params,
-      }).reduce(
-        (acc, [key, value]) => {
-          if (value !== undefined) {
-            acc[key] = String(value); //Ensure all values are strings
-          }
-          return acc;
-        },
-        {} as Record<string, string>
-      )
+      }).reduce((acc: any, [key, value]) => {
+        if (value !== undefined) acc[key] = String(value);
+        return acc;
+      }, {})
     ).toString()}`;
   };
 
   return (
-    <div className="grid md:grid-cols-5 gap-5">
-      {/* Sidebar Filters */}
-      <div>
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+      {/* Mobile Filter Toggle */}
+      <div className="md:hidden flex justify-end pr-3">
+        <details className="w-full">
+          <summary className="cursor-pointer bg-green-600 text-white px-4 py-2 rounded text-center">
+            Filters
+          </summary>
+
+          <div className="mt-3 bg-white p-4 shadow rounded space-y-4">
+            {/* Category */}
+            <div>
+              <div className="text-lg font-semibold">Category</div>
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    href={getFilterUrl({ category: "all" })}
+                    className={`${category === "all" && "text-primary"}`}
+                  >
+                    Any
+                  </Link>
+                </li>
+                {categories.map(({ name, value }: any) => (
+                  <li key={value}>
+                    <Link
+                      href={getFilterUrl({ category: value })}
+                      className={`${category === value && "text-primary"}`}
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Price */}
+            <div>
+              <div className="text-lg font-semibold">Price</div>
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    href={getFilterUrl({ price: "all" })}
+                    className={`${price === "all" && "text-primary"}`}
+                  >
+                    Any
+                  </Link>
+                </li>
+                {prices.map(({ name, value }: any) => (
+                  <li key={value}>
+                    <Link
+                      href={getFilterUrl({ price: value })}
+                      className={`${price === value && "text-primary"}`}
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Rating */}
+            <div>
+              <div className="text-lg font-semibold">Customer Review</div>
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    href={getFilterUrl({ rating: "all" })}
+                    className={`${rating === "all" && "text-primary"}`}
+                  >
+                    Any
+                  </Link>
+                </li>
+                {ratings.map(({ name, value }: any) => (
+                  <li key={value}>
+                    <Link
+                      href={getFilterUrl({ rating: value })}
+                      className={`${rating === value && "text-primary"}`}
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      {/* Desktop Sidebar */}
+      <div className="hidden md:block space-y-4 pl-3">
         <div>
           <div className="text-xl pt-3">Category</div>
-          <ul>
+          <ul className="space-y-1">
             <li>
               <Link
                 href={getFilterUrl({ category: "all" })}
@@ -132,7 +192,7 @@ export default async function SearchPage({
                 Any
               </Link>
             </li>
-            {categories.map(({ name, value }) => (
+            {categories.map(({ name, value }: any) => (
               <li key={value}>
                 <Link
                   href={getFilterUrl({ category: value })}
@@ -147,7 +207,7 @@ export default async function SearchPage({
 
         <div>
           <div className="text-xl pt-3">Price</div>
-          <ul>
+          <ul className="space-y-1">
             <li>
               <Link
                 href={getFilterUrl({ price: "all" })}
@@ -156,7 +216,7 @@ export default async function SearchPage({
                 Any
               </Link>
             </li>
-            {prices.map(({ name, value }) => (
+            {prices.map(({ name, value }: any) => (
               <li key={value}>
                 <Link
                   href={getFilterUrl({ price: value })}
@@ -171,7 +231,7 @@ export default async function SearchPage({
 
         <div>
           <div className="text-xl pt-3">Customer Review</div>
-          <ul>
+          <ul className="space-y-1">
             <li>
               <Link
                 href={getFilterUrl({ rating: "all" })}
@@ -180,7 +240,7 @@ export default async function SearchPage({
                 Any
               </Link>
             </li>
-            {ratings.map(({ name, value }) => (
+            {ratings.map(({ name, value }: any) => (
               <li key={value}>
                 <Link
                   href={getFilterUrl({ rating: value })}
@@ -194,22 +254,16 @@ export default async function SearchPage({
         </div>
       </div>
 
-      {/* Products Display Section */}
-      <div className="md:col-span-4 space-y-4">
-        {/* Search Filters Summary */}
+      {/* Products Section */}
+      <div className="md:col-span-4 space-y-4 px-3">
         <div className="flex flex-col sm:flex-row gap-2">
-          <div className="flex-1 bg-green-100 p-4 border-2 border-green-500 rounded">
-            {["category", "price", "rating"]
-              .map((key) => {
-                const value = searchParams[key as keyof typeof searchParams];
-                return value && value !== "all" ? (
-                  <span key={key}>
-                    {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
-                  </span>
-                ) : null;
-              })
-              .filter(Boolean)}
-            {/* Show the “Clear” button only when at least one filter is active */}
+          <div className="flex-1 bg-green-100 p-4 border-2 border-green-500 rounded text-sm sm:text-base space-x-2">
+            {["category", "price", "rating"].map((key) => {
+              const value = searchParams[key];
+              return value && value !== "all" ? (
+                <span key={key}>{`${key}: ${value}`}</span>
+              ) : null;
+            })}
             {(q !== "all" ||
               category !== "all" ||
               price !== "all" ||
@@ -219,8 +273,8 @@ export default async function SearchPage({
               </Button>
             )}
           </div>
-          {/* Sort Options */}
-          <div className="flex-1 bg-green-50 p-4 border-2 border-green-500 rounded">
+
+          <div className="flex-1 bg-green-50 p-4 border-2 border-green-500 rounded text-sm sm:text-base">
             Sort by{" "}
             {sortOrders.map((s) => (
               <Link
@@ -234,18 +288,16 @@ export default async function SearchPage({
           </div>
         </div>
 
-        {/* Product Grid - Ensure 6 Items Display */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 bg-blue-50 gap-2 p-1">
           {!products || products.data?.length === 0 ? (
             <div>No product found</div>
           ) : (
-            products.data?.map((product) => (
+            products.data?.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))
           )}
         </div>
 
-        {/* Pagination */}
         <div className="flex justify-center mt-4">
           {products?.totalPages > 1 && (
             <Pagination page={page} totalPages={products.totalPages} />
