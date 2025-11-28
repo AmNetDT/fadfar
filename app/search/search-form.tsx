@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -45,7 +44,7 @@ export default function SearchForm({
   };
 }) {
   const {
-    q = "all",
+    q = "all", // default to 'all' if undefined
     category = "all",
     price = "all",
     rating = "all",
@@ -57,26 +56,27 @@ export default function SearchForm({
   const [showFilters, setShowFilters] = useState(false);
 
   const getFilterUrl = (params: Partial<typeof searchParams>) => {
-    return `/search?${new URLSearchParams(
-      Object.entries({
-        q,
-        category,
-        price,
-        rating,
-        sort,
-        page,
-        promo_id,
-        ...params,
-      }).reduce(
-        (acc, [key, value]) => {
-          if (value !== undefined) {
-            acc[key] = String(value); // ensure everything is a string
-          }
-          return acc;
-        },
-        {} as Record<string, string>
+    // Gather current search params
+    const base = {
+      q,
+      category,
+      price,
+      rating,
+      sort,
+      page,
+      promo_id,
+      ...params,
+    };
+
+    // Remove undefined / "all" / null values and force everything to string
+    const filteredEntries = Object.entries(base)
+      .filter(
+        ([_, value]) => value !== undefined && value !== null && value !== "all"
       )
-    ).toString()}`;
+      .map(([key, value]) => [key, String(value)]);
+
+    const search = new URLSearchParams(filteredEntries);
+    return `/search?${search.toString()}`;
   };
 
   return (
@@ -110,10 +110,10 @@ export default function SearchForm({
                 </Link>
               </li>
               {categories.map(({ name, value }) => (
-                <li key={value}>
+                <li key={value || name}>
                   <Link
-                    href={getFilterUrl({ category: value })}
-                    className={`${category === value && "text-primary"}`}
+                    href={getFilterUrl({ category: value || name })}
+                    className={`${category === (value || name) && "text-primary"}`}
                   >
                     {name}
                   </Link>
@@ -121,7 +121,6 @@ export default function SearchForm({
               ))}
             </ul>
           </div>
-
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-2">Price</h3>
             <ul className="space-y-1">
@@ -145,7 +144,6 @@ export default function SearchForm({
               ))}
             </ul>
           </div>
-
           <div>
             <h3 className="text-xl font-semibold mb-2">Customer Review</h3>
             <ul className="space-y-1">
@@ -176,13 +174,20 @@ export default function SearchForm({
           {/* Search summary & sort */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 bg-green-100 p-4 border-2 border-green-500 rounded">
+              {/* Only display defined, non-"all" search parameters */}
               {["q", "category", "price", "rating"].map((key) => {
                 const value = searchParams[key as keyof typeof searchParams];
-                return value !== "all" ? (
-                  <span key={key} className="mr-2">
-                    {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
-                  </span>
-                ) : null;
+
+                // Check if value is truthy (not undefined, null, or empty string) AND not "all"
+                if (value && value !== "all") {
+                  return (
+                    <span key={key} className="mr-2">
+                      {/* Display as "Query: value" or "Category: value" */}
+                      {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
+                    </span>
+                  );
+                }
+                return null; // Don't render anything if the value is undefined or "all"
               })}
               {(q !== "all" ||
                 category !== "all" ||
@@ -193,7 +198,6 @@ export default function SearchForm({
                 </Button>
               )}
             </div>
-
             <div className="sm:w-1/3 bg-green-50 p-4 border-2 border-green-500 rounded">
               <span className="mr-2">Sort by</span>
               {sortOrders.map((s) => (
@@ -211,9 +215,11 @@ export default function SearchForm({
           {/* Search form */}
           <form action="/search" method="GET" className="w-full">
             <div className="flex flex-col sm:flex-row gap-2 items-center">
-              {/* Category selector – hidden on very small screens */}
+              {/* Category selector */}
               <div className="w-full sm:w-auto">
-                <Select name="category">
+                <Select name="category" defaultValue={category}>
+                  {" "}
+                  {/* Set the default selected value */}
                   <SelectTrigger className="p-4 bg-white text-black hover:bg-green-50 hover:text-orange-500 text-base border-none w-full">
                     <SelectValue placeholder="SORT BY CATEGORY" />
                   </SelectTrigger>
@@ -234,31 +240,20 @@ export default function SearchForm({
                 </Select>
               </div>
 
-              {/* Search input – grows to fill available space */}
+              {/* Search input – now displays the active search query 'q' */}
               <Input
                 name="q"
                 type="text"
                 className="text-base p-3 border-2 border-slate-300 rounded-none flex-1"
                 placeholder="Search products..."
+                defaultValue={q === "all" ? "" : q} // Set the default value to 'q' or empty string if 'all'
               />
-
               <Button className="p-4 bg-orange-500 text-white text-base font-light w-full sm:w-auto">
                 <SearchIcon className="mr-2" />
                 Search
               </Button>
             </div>
           </form>
-
-          {/* Product grid – fully responsive */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* You'll need to fetch and render products here – this is just a placeholder */}
-            <div className="col-span-full text-center py-8">
-              Products will be rendered here.
-            </div>
-          </div>
-
-          {/* Pagination */}
-          {/* <Pagination page={page} totalPages={products.totalPages} /> */}
         </div>
       </div>
     </div>

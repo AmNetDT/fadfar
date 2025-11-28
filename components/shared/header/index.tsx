@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MenuIcon, ShoppingCartIcon } from "lucide-react";
 import { getAllCategories } from "@/lib/actions/product.actions";
-import Search from "./search";
+import SearchWrapper from "./search-wrapper";
 import UserButtonMobile from "./user-button-mobile";
 
 const Header = async () => {
@@ -99,7 +99,7 @@ const Header = async () => {
 
         {/* Search Bar - Full width on mobile, inline on desktop */}
         <div className="w-full mt-4 md:mt-0 md:w-auto md:flex-grow md:flex md:justify-center">
-          <Search />
+          <SearchWrapper />
         </div>
 
         {/* Desktop-only elements */}

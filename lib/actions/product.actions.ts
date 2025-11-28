@@ -1,12 +1,13 @@
-import { desc } from 'drizzle-orm'
-import db from '@/db/drizzle'
-import { products } from '@/db/schema'
-import { and, count, eq, ilike, sql } from 'drizzle-orm/sql'
-import { PAGE_SIZE } from '../constants'
-import { string, z } from 'zod'
-import { insertProductSchema, updateProductSchema } from '../validator'
-import { revalidatePath } from 'next/cache'
-import { formatError } from '../utils'
+"use server";
+import { desc } from "drizzle-orm";
+import db from "@/db/drizzle";
+import { products } from "@/db/schema";
+import { and, count, eq, ilike, sql, or } from "drizzle-orm/sql";
+import { PAGE_SIZE } from "../constants";
+import { z } from "zod";
+import { insertProductSchema, updateProductSchema } from "../validator";
+import { revalidatePath } from "next/cache";
+import { formatError } from "../utils";
 
 // CREATE
 export async function createProduct(
@@ -14,16 +15,16 @@ export async function createProduct(
 ): Promise<{ success: boolean; message: string }> {
   try {
     // Replace with actual implementation logic
-    const product = insertProductSchema.parse(data)
-    await db.insert(products).values(product)
+    const product = insertProductSchema.parse(data);
+    await db.insert(products).values(product);
 
-    revalidatePath('/admin/products')
+    revalidatePath("/admin/products");
     return {
       success: true,
-      message: 'Product created successfully',
-    }
+      message: "Product created successfully",
+    };
   } catch (error) {
-    return { success: false, message: formatError(error) }
+    return { success: false, message: formatError(error) };
   }
 }
 
@@ -33,19 +34,19 @@ export async function updateProduct(
 ): Promise<{ success: boolean; message: string }> {
   try {
     // Replace with actual implementation logic
-    const product = updateProductSchema.parse(data)
+    const product = updateProductSchema.parse(data);
     const productExists = await db.query.products.findFirst({
       where: eq(products.id, product.id),
-    })
-    if (!productExists) throw new Error('Product not found')
-    await db.update(products).set(product).where(eq(products.id, product.id))
-    revalidatePath('/admin/products')
+    });
+    if (!productExists) throw new Error("Product not found");
+    await db.update(products).set(product).where(eq(products.id, product.id));
+    revalidatePath("/admin/products");
     return {
       success: true,
-      message: 'Product updated successfully',
-    }
+      message: "Product updated successfully",
+    };
   } catch (error) {
-    return { success: false, message: formatError(error) }
+    return { success: false, message: formatError(error) };
   }
 }
 
@@ -53,29 +54,29 @@ export async function updateProduct(
 export async function getProductById(productId: string) {
   return await db.query.products.findFirst({
     where: eq(products.id, productId),
-  })
+  });
 }
 
 export async function getLatestProducts() {
   const data = await db.query.products.findMany({
     orderBy: [desc(products.createdAt)],
     limit: 36,
-  })
-  return data
+  });
+  return data;
 }
 
 export async function getProductBySlug(slug: string) {
   return await db.query.products.findFirst({
     where: eq(products.slug, slug),
-  })
+  });
 }
 
 export async function getAllCategories() {
   const data = await db
     .selectDistinctOn([products.category], { name: products.category })
     .from(products)
-    .orderBy(products.category)
-  return data
+    .orderBy(products.category);
+  return data;
 }
 
 export async function getFeaturedProducts() {
@@ -83,18 +84,18 @@ export async function getFeaturedProducts() {
     where: eq(products.isFeatured, true),
     orderBy: [desc(products.createdAt)],
     //limit: 4,
-  })
-  return data
+  });
+  return data;
 }
 export async function getAllPromo() {
   const data = await db.query.products.findMany({
     where: eq(products.promo_id, 2),
     orderBy: [desc(products.createdAt)],
     //limit: 4,
-  })
-  return data
+  });
+  return data;
 }
-
+// UPDATE getAllProducts to be more comprehensive in its search criteria
 export async function getAllProducts({
   query,
   limit = PAGE_SIZE,
@@ -105,61 +106,78 @@ export async function getAllProducts({
   promo_id,
   sort,
 }: {
-  query: string
-  category: string
-  limit?: number
-  page: number
-  price?: string
-  rating?: string
-  promo_id?: number
-  sort?: string
+  query: string;
+  category: string;
+  limit?: number;
+  page: number;
+  price?: string;
+  rating?: string;
+  promo_id?: number;
+  sort?: string;
 }) {
+  // --- UPDATED SEARCH LOGIC ---
   const queryFilter =
-    query && query !== 'all' ? ilike(products.name, `%${query}%`) : undefined
+    query && query !== "all"
+      ? or(
+          // Use 'or' to search across multiple fields
+          ilike(products.name, `%${query}%`),
+          ilike(products.description, `%${query}%`) // Add description or other fields here
+        )
+      : undefined;
+  // ----------------------------
+
   const categoryFilter =
-    category && category !== 'all' ? eq(products.category, category) : undefined
+    category && category !== "all"
+      ? eq(products.category, category)
+      : undefined;
   const promoFilter =
-    typeof promo_id === 'number' ? eq(products.promo_id, promo_id) : undefined
+    typeof promo_id === "number" ? eq(products.promo_id, promo_id) : undefined;
   const ratingFilter =
-    rating && rating !== 'all'
+    rating && rating !== "all"
       ? sql`${products.rating} >= ${rating}`
-      : undefined
+      : undefined;
   const priceFilter =
-    price && price !== 'all'
-      ? sql`${products.price} >= ${price.split('-')[0]} AND ${
+    price && price !== "all"
+      ? sql`${products.price} >= ${price.split("-")[0]} AND ${
           products.price
-        } <= ${price.split('-')[1]}`
-      : undefined
+        } <= ${price.split("-")[1]}`
+      : undefined;
   const order =
-    sort === 'lowest'
+    sort === "lowest"
       ? products.price
-      : sort === 'highest'
+      : sort === "highest"
         ? desc(products.price)
-        : sort === 'rating'
+        : sort === "rating"
           ? desc(products.rating)
-          : desc(products.createdAt)
+          : desc(products.createdAt);
+
+  // Combine all filters using AND
   const conditions = [
     queryFilter,
     categoryFilter,
     ratingFilter,
     priceFilter,
     promoFilter,
-  ].filter(Boolean)
-  const condition = conditions.length > 0 ? and(...conditions) : undefined
+  ].filter(Boolean);
+  const condition = conditions.length > 0 ? and(...conditions) : undefined;
 
+  // Execute the query
   const data = await db
     .select()
     .from(products)
     .where(condition)
     .orderBy(order)
     .offset((page - 1) * limit)
-    .limit(18)
+    .limit(18);
+
+  // Get the count for pagination
   const dataCount = await db
     .select({ count: count() })
     .from(products)
-    .where(condition)
+    .where(condition);
+
   return {
     data,
     totalPages: Math.ceil(dataCount[0].count / limit),
-  }
+  };
 }
