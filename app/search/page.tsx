@@ -197,22 +197,18 @@ export default async function SearchPage({
       {/* Products Display Section */}
       <div className="md:col-span-4 space-y-4">
         {/* Search Filters Summary */}
-        <div className="flex flex-nowrap gap-2">
-          <div className="w-4/6 bg-green-100 p-4 border-2 border-green-500 rounded">
-            {
-              ["category", "price", "rating"]
-                .map((key) => {
-                  const value = searchParams[key as keyof typeof searchParams];
-                  // Only render a span when the value exists and isn’t the default “all”
-                  return value && value !== "all" ? (
-                    <span key={key}>
-                      {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
-                    </span>
-                  ) : null;
-                })
-                .filter(Boolean) // removes the null entries
-            }
-
+        <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex-1 bg-green-100 p-4 border-2 border-green-500 rounded">
+            {["category", "price", "rating"]
+              .map((key) => {
+                const value = searchParams[key as keyof typeof searchParams];
+                return value && value !== "all" ? (
+                  <span key={key}>
+                    {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
+                  </span>
+                ) : null;
+              })
+              .filter(Boolean)}
             {/* Show the “Clear” button only when at least one filter is active */}
             {(q !== "all" ||
               category !== "all" ||
@@ -224,8 +220,7 @@ export default async function SearchPage({
             )}
           </div>
           {/* Sort Options */}
-
-          <div className="w-2/6 bg-green-50 p-4 border-2 border-green-500 rounded">
+          <div className="flex-1 bg-green-50 p-4 border-2 border-green-500 rounded">
             Sort by{" "}
             {sortOrders.map((s) => (
               <Link
@@ -251,9 +246,11 @@ export default async function SearchPage({
         </div>
 
         {/* Pagination */}
-        {products?.totalPages > 1 && (
-          <Pagination page={page} totalPages={products.totalPages} />
-        )}
+        <div className="flex justify-center mt-4">
+          {products?.totalPages > 1 && (
+            <Pagination page={page} totalPages={products.totalPages} />
+          )}
+        </div>
       </div>
     </div>
   );
