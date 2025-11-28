@@ -12,8 +12,8 @@ loadEnvConfig(cwd());
 const main = async () => {
   try {
     const client = new Client({
-      //connectionString: process.env.POSTGRES_URL,
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.POSTGRES_URL,
+      //connectionString: process.env.DATABASE_URL,
     });
     await client.connect();
     const db = drizzle(client);
@@ -27,12 +27,12 @@ const main = async () => {
     //   .insert(schema.users)
     //   .values(sampleData.users)
     //   .returning();
-    // // const resProducts = await db
-    // //   .insert(schema.products)
-    // //   .values(sampleData.products)
-    // //   .onConflictDoNothing() // This will ignore duplicate entries
-    // //   .returning()
-    // console.log({ /*resProducts,*/ resUsers });
+    // const resProducts = await db
+    //   .insert(schema.products)
+    //   .values(sampleData.products)
+    //   .onConflictDoNothing() // This will ignore duplicate entries
+    //   .returning()
+    // console.log({ resProducts, resUsers });
     await client.end();
   } catch (error) {
     console.error(error);
